@@ -16,6 +16,12 @@ def loadGame(game):
 
 def startNewGame(game):
     print("\nWelcome.")
+    return game
+
+
+def playGame(game):
+    print("Playing game")
+    print("Testing save:")
     print("Enter a name for the save file.")
     saveName = raw_input("> ")
     game.gameName = saveName
@@ -29,31 +35,27 @@ def startNewGame(game):
 
 
 def main():
+    game = Game()
+    print("                             __                     __                    ")
+    print("      .----.-----. .---.-.--|  |.--.--.-----.-----.|  |_.--.--.----.-----.")
+    print("      |  __|__ --| |  _  |  _  ||  |  |  -__|     ||   _|  |  |   _|  -__|")
+    print("      |____|_____| |___._|_____| \___/|_____|__|__||____|_____|__| |_____|\n")
+    print("Select an option.")
+    print("1. Start new game")
+    print("2. Load saved game")
+    print("3. Quit\n")
+    choice = raw_input("> ")
 
-	game = Game()
-
-	print("                             __                     __                    ")
-	print("      .----.-----. .---.-.--|  |.--.--.-----.-----.|  |_.--.--.----.-----.")
-	print("      |  __|__ --| |  _  |  _  ||  |  |  -__|     ||   _|  |  |   _|  -__|")
-	print("      |____|_____| |___._|_____| \___/|_____|__|__||____|_____|__| |_____|\n")
-	print("Select an option.")
-	print("1. Start new game")
-	print("2. Load saved game")
-	print("3. Quit\n")
-
-	choice = raw_input("> ")
-	if (choice == "1"):
-		startNewGame(game)
-
-	elif (choice == "2"):
-		game = loadGame(game)
-
-	elif (choice == "3"):
-		print("quit")
-
-	else:
-		print("Please enter a valid choice.")
-
+    if (choice == "1"):
+        game = startNewGame(game)
+        playGame(game)
+    elif (choice == "2"):
+        game = loadGame(game)
+        playGame(game)
+    elif (choice == "3"):
+        print("quit")
+    else:
+        print("Please enter a valid choice.")
 
 if __name__ == "__main__":
 	main()
