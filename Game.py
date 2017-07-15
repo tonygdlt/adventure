@@ -11,10 +11,15 @@ class Game(object):
         self.r5 = Room("room5", [], True)
 
         self.r1.setNeighbors([self.r2, self.r4, self.r5])
+        self.r1.neighborDirections = {"north": self.r2, "south": self.r4, "east": self.r5}
         self.r2.setNeighbors([self.r1])
+        self.r2.neighborDirections = {"south": self.r1}
         self.r3.setNeighbors([self.r4, self.r5])
+        self.r3.neighborDirections = {"west": self.r4, "north": self.r5}
         self.r4.setNeighbors([self.r1, self.r3])
+        self.r4.neighborDirections = {"north": self.r1, "east": self.r3}
         self.r5.setNeighbors([self.r1, self.r3])
+        self.r5.neighborDirections = {"west": self.r1, "south": self.r3}
 
         self.r1.setLongDescription("This is the long description for room1")
         self.r2.setLongDescription("This is the long description for room2")
