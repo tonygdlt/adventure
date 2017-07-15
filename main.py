@@ -3,6 +3,7 @@ from Game import Game
 import json
 
 actionVerb = ["look", "go", "take", "drop"]
+directionVerb = ["north", "south", "east", "west"]
 #preposition = ["to", ]
 menuVerb = ["start", "loadgame", "savegame"]
 singleVerb = ["help", "inventory"]
@@ -24,6 +25,29 @@ def lookItem(restOfTheCommand, game):
         item = words[0]
         print game.currentRoom.longDesc
 
+def enterRoom(room, game):
+    print "Entering",
+    print game.currentRoom.name
+
+    if game.currentRoom.hasBeenVisited == False:
+        print game.currentRoom.longDesc
+        game.currentRoom.hasBeenVisited = True
+    else:
+        print game.currentRoom.shortDesc
+
+    print "Neighboring rooms:"
+    for i in room.neighbors:
+        print i.name
+
+def directionWhere(direction, game):
+    isValidNeighbor = False
+    for i in game.rooms:
+        if i == game.currentRoom:
+            if direction in game.currentRoom.neighborDirections:
+                isValidNeighbor = True
+                game.currentRoom = game.currentRoom.neighborDirections[direction]
+                enterRoom(game.currentRoom, game)
+
 def goWhere(restOfTheCommand, game):
 	#print restOfTheCommand[0]
     words = restOfTheCommand
@@ -38,23 +62,24 @@ def goWhere(restOfTheCommand, game):
     for i in game.rooms:
         if i == game.currentRoom:
             for j in i.neighbors:
-                if j.name == location:
+                if location in game.currentRoom.neighborDirections:
+                    isValidNeighbor = True
+                    game.currentRoom = game.currentRoom.neighborDirections[location]
+                    enterRoom(game.currentRoom, game)
+
+                elif j.name == location: #for context 'go room'
                     isValidNeighbor = True
                     game.currentRoom = j
-                    print "Entering",
-                    print game.currentRoom.name
+                    enterRoom(j, game)
 
-                    if game.currentRoom.hasBeenVisited == False:
-                        print game.currentRoom.longDesc
-                        game.currentRoom.hasBeenVisited = True
-                    else:
-                        print game.currentRoom.shortDesc
-
-                    print "Neighboring rooms:"
-                    for k in j.neighbors:
-                        print k.name
     if isValidNeighbor == False:
         print "Please choose a valid neighboring room."
+
+def roomWhere(roomName, game):
+    for i in game.rooms:
+        if i.name == roomName:
+            game.currentRoom = i
+            enterRoom(i, game)
 
 #acquire an object, putting it into your inventory
 def takeItem(item, game):
@@ -129,7 +154,8 @@ def saveGame(game):
 
 dispatch = {"start": startGame, "loadgame": resumeGame, "savegame": saveGame, 
 			"look": lookItem, "go": goWhere, "take": takeItem, "drop": dropItem, "help": helpUser,
-			"inventory": checkInventory}
+			"inventory": checkInventory, "north": directionWhere, "south": directionWhere,
+            "east": directionWhere, "west": directionWhere, "room": roomWhere}
 
 # helper ------------------------------------------------
 def isActionVerb(verb):
@@ -140,22 +166,36 @@ def isMenuVerb(verb):
 
 def isSingleVerb(verb):
 	return verb in singleVerb
+
+def isDirectionVerb(verb):
+    return verb in directionVerb
+
+def isRoomVerb(verb, game):
+    for i in game.currentRoom.neighbors:
+        if verb == i.name:
+            return True
+    return False
 #--------------------------------------------------------
 
 def commandParsing(userInput, game):
 	#print "this is the input", userInput
 	#required verbs and phrases
-	verb = userInput.split()[0].lower()
+    verb = userInput.split()[0].lower()
 	#check the verb is in the list
-	if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb):
-		if isMenuVerb(verb) or isSingleVerb(verb):
-			dispatch[verb](game)
-		else:
-			restOfTheCommand = userInput.lower().split()[1:]
-			dispatch[verb](restOfTheCommand, game)
-	else:
-		print "use 'help' for instruction"
-	return
+    if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb) or isDirectionVerb(verb) or isRoomVerb(verb, game):
+        if isMenuVerb(verb) or isSingleVerb(verb):
+            dispatch[verb](game)
+        elif isDirectionVerb(verb):
+            dispatch[verb](verb, game)
+        elif isRoomVerb(verb, game):
+            dispatch["room"](verb, game)
+        else:
+            isRoomVerb(verb, game)
+            restOfTheCommand = userInput.lower().split()[1:]
+            dispatch[verb](restOfTheCommand, game)
+    else:
+        print "use 'help' for instruction"
+    return
 
 def main():
     game = Game()
