@@ -18,7 +18,7 @@ def lookItem(restOfTheCommand, game):
 		item = words[1]
 	else:
 		item = words[0]
-	print "look", item
+	print game.currentRoom.longDesc
 
 def goWhere(restOfTheCommand, game):
 	#print restOfTheCommand[0]
@@ -30,17 +30,26 @@ def goWhere(restOfTheCommand, game):
 		#location = words[0]
     location = words[-1]
 
-    neighborFound = False
+    isValidNeighbor = False
     for i in game.rooms:
         if i == game.currentRoom:
             for j in i.neighbors:
                 if j.name == location:
-                    neighborFound = True
+                    isValidNeighbor = True
                     game.currentRoom = j
+                    print "Entering",
+                    print game.currentRoom.name
+
+                    if game.currentRoom.hasBeenVisited == False:
+                        print game.currentRoom.longDesc
+                        game.currentRoom.hasBeenVisited = True
+                    else:
+                        print game.currentRoom.shortDesc
+
                     print "Neighboring rooms:"
                     for k in j.neighbors:
                         print k.name
-    if neighborFound == False:
+    if isValidNeighbor == False:
         print "Please choose a valid neighboring room."
 
 #acquire an object, putting it into your inventory
@@ -134,6 +143,9 @@ def main():
             commandParsing(command, game)
         else:
             print "Please enter a valid choice."
+
+    print game.r1.longDesc
+    game.r1.hasBeenVisited = True
 
     print "Neighboring rooms:"
     for i in game.r1.neighbors:
