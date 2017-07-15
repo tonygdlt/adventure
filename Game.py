@@ -28,6 +28,8 @@ class Game(object):
         self.r4.setShortDescription("This is the short description for room4")
         self.r5.setShortDescription("This is the short description for room5")
 
+        self.itemDescriptions = {"lamp": "A dusty lamp that seems to have something inside", "key1": "A long wooden key", "key2": "A small metal key", "stick": "A warbly walking stick"}
+
         self.rooms = [self.r1, self.r2, self.r3, self.r4, self.r5]
         self.currentRoom = self.r1
 

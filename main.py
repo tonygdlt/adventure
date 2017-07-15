@@ -12,13 +12,17 @@ singleVerb = ["help", "inventory"]
 # repeats the long form explanation of the room
 def lookItem(restOfTheCommand, game):
 	#print restOfTheCommand[0]
-	words = restOfTheCommand
+    words = restOfTheCommand
 	#if preposition provided
-	if words[0] == "at":
-		item = words[1]
-	else:
-		item = words[0]
-	print game.currentRoom.longDesc
+    if words[0] == "at":
+        item = words[1]
+        if words[1] in game.currentRoom.items:
+            print game.itemDescriptions[words[1]]
+        else:
+            print "Nothing to look at."
+    else:
+        item = words[0]
+        print game.currentRoom.longDesc
 
 def goWhere(restOfTheCommand, game):
 	#print restOfTheCommand[0]
