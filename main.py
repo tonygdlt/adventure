@@ -22,14 +22,26 @@ def lookItem(restOfTheCommand, game):
 
 def goWhere(restOfTheCommand, game):
 	#print restOfTheCommand[0]
-	words = restOfTheCommand
+    words = restOfTheCommand
 	#if preposition provided
 	#if words[0] == "to":
-		#item = words[0]
+		#location = words[0]
 	#else:
-		#item = words[0]
-	item = words[-1]
-	print "go", item
+		#location = words[0]
+    location = words[-1]
+
+    neighborFound = False
+    for i in game.rooms:
+        if i == game.currentRoom:
+            for j in i.neighbors:
+                if j.name == location:
+                    neighborFound = True
+                    game.currentRoom = j
+                    print "Neighboring rooms:"
+                    for k in j.neighbors:
+                        print k.name
+    if neighborFound == False:
+        print "Please choose a valid neighboring room."
 
 #acquire an object, putting it into your inventory
 def takeItem(item, game):
@@ -122,6 +134,11 @@ def main():
             commandParsing(command, game)
         else:
             print "Please enter a valid choice."
+
+    print "Neighboring rooms:"
+    for i in game.r1.neighbors:
+        print i.name
+
     while True:
         command = raw_input("> ")
         commandParsing(command, game)
