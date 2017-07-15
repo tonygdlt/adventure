@@ -2,7 +2,7 @@ import sys
 from Game import Game
 import json
 
-actionVerb = ["look", "go", "take"]
+actionVerb = ["look", "go", "take", "drop"]
 #preposition = ["to", ]
 menuVerb = ["start", "loadgame", "savegame"]
 singleVerb = ["help", "inventory"]
@@ -54,7 +54,31 @@ def goWhere(restOfTheCommand, game):
 
 #acquire an object, putting it into your inventory
 def takeItem(item, game):
-	print "take", item
+    isAlreadyInBag = False
+    for i in game.bag.items:
+        if i == item[0]:
+            isAlreadyInBag = True
+    if isAlreadyInBag == True:
+        print "Your bag already contains that item!"
+    else:
+        if item[0] in game.currentRoom.items:
+            game.bag.items.append(item[0])
+            game.currentRoom.items.remove(item[0])
+            print "Placed", item[0], "in bag."
+        else:
+            print "No", item[0], "to pick up."
+
+#drop object in current room, removing it from your inventory
+def dropItem(item, game):
+    if item[0] in game.bag.items:
+        if game.currentRoom.itemsAreDroppable == True:
+            game.bag.items.remove(item[0])
+            game.currentRoom.dropItem(item[0])
+            print "Dropped", item[0]
+        else:
+            print "Can't drop that here!"
+    else:
+        print "No", item[0], "in bag."
 
 #list a set of verbs the game understands
 def helpUser(game):
@@ -63,6 +87,8 @@ def helpUser(game):
 		print verb
 #
 def checkInventory(game):
+    if not game.bag.items:
+        print "Bag is empty."
     for i in game.bag.items:
         print i
 
@@ -98,7 +124,7 @@ def saveGame(game):
 
 
 dispatch = {"start": startGame, "loadgame": resumeGame, "savegame": saveGame, 
-			"look": lookItem, "go": goWhere, "take": takeItem, "help": helpUser,
+			"look": lookItem, "go": goWhere, "take": takeItem, "drop": dropItem, "help": helpUser,
 			"inventory": checkInventory}
 
 # helper ------------------------------------------------

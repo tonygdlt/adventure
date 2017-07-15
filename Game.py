@@ -4,11 +4,11 @@ from Room import Room
 class Game(object):
     def __init__(self):
         self.bag = Bag()
-        self.r1 = Room("room1", False, False, False)
-        self.r2 = Room("room2", False, True, False)
-        self.r3 = Room("room3", True, False, False)
-        self.r4 = Room("room4", False, False, True)
-        self.r5 = Room("room5", False, False, False)
+        self.r1 = Room("room1", [], True)
+        self.r2 = Room("room2", ["lamp"], True)
+        self.r3 = Room("room3", ["key1"], True)
+        self.r4 = Room("room4", ["stick", "key2"], True)
+        self.r5 = Room("room5", [], True)
 
         self.r1.setNeighbors([self.r2, self.r4, self.r5])
         self.r2.setNeighbors([self.r1])

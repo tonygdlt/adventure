@@ -1,13 +1,14 @@
 class Room(object):
-    def __init__(self, name, key, anotherItem, thirdItem):
+    def __init__(self, name, items, itemsAreDroppable):
         self.name = name
         self.hasBeenVisited = False
-        self.key = key
-        self.anotherItem = anotherItem
-        self.thirdItem = thirdItem
+        self.items = items
+        self.itemsAreDroppable = itemsAreDroppable
     def setNeighbors(self, neighborArr):
         self.neighbors = neighborArr
     def setLongDescription(self, desc):
         self.longDesc = desc
     def setShortDescription(self, desc):
         self.shortDesc = desc
+    def dropItem(self, item):
+        self.items.append(item)
