@@ -15,14 +15,13 @@ def lookItem(restOfTheCommand, game):
 	#print restOfTheCommand[0]
     words = restOfTheCommand
 	#if preposition provided
-    if words[0] == "at":
+    if words and words[0] == "at":
         item = words[1]
         if words[1] in game.currentRoom.items:
             print game.itemDescriptions[words[1]]
         else:
             print "Nothing to look at."
     else:
-        item = words[0]
         print game.currentRoom.longDesc
 
 def enterRoom(room, game):
@@ -130,17 +129,31 @@ def resumeGame(game):
     for i in range(len(jsonData["list"])):
         print i+1,"\b.",jsonData["list"][i]["name"]
     loadNum = input("> ")
-    game.currentRoom = jsonData["list"][loadNum-1]["room"]
+    roomName = jsonData["list"][loadNum-1]["room"]
+    for i in game.rooms:
+        if i.name == roomName:
+            game.currentRoom = i
     game.gameName = jsonData["list"][loadNum-1]["name"]
     for i in jsonData["list"][loadNum-1]["bag"]:
         game.bag.items.append(i)
+
+    roomCnt = 0
+    for i in jsonData["list"][loadNum-1]["items"]:
+        game.rooms[roomCnt].items = i
+        roomCnt = roomCnt+1
+
     print "Game successfully loaded."
 
 def saveGame(game):
+    roomItemsGen = (i.items for i in game.rooms)
+    roomItems = []
+    for i in roomItemsGen:
+        roomItems.append(i)
+
     print "Enter a name for the save file."
     saveName = raw_input("> ")
     game.gameName = saveName
-    jsonToWrite = {"room":game.currentRoom, "bag":game.bag.items, "name":game.gameName}
+    jsonToWrite = {"room":game.currentRoom.name, "bag":game.bag.items, "name":game.gameName, "items":roomItems}
 
     with open('savedGames.txt', 'r+') as f:
         data = json.load(f)
