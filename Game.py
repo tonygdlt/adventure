@@ -1,41 +1,61 @@
+import json
 from Bag import Bag
 from Room import Room
+from Stuff import Stuff
 
 class Game(object):
-    def __init__(self):
+    """description of class"""
+    def __init__(self, roomData, itemData):
         self.bag = Bag()
-        self.r1 = Room("room1", [], True)
-        self.r2 = Room("room2", ["lamp"], True)
-        self.r3 = Room("room3", ["key1"], True)
-        self.r4 = Room("room4", ["stick", "key2"], True)
-        self.r5 = Room("room5", [], True)
+        self.stuff = list()
+        self.roomNames = []
+        self.rooms = list()
 
-        self.r1.setNeighbors([self.r2, self.r4, self.r5])
-        self.r1.neighborDirections = {"north": self.r2, "south": self.r4, "east": self.r5}
-        self.r2.setNeighbors([self.r1])
-        self.r2.neighborDirections = {"south": self.r1}
-        self.r3.setNeighbors([self.r4, self.r5])
-        self.r3.neighborDirections = {"west": self.r4, "north": self.r5}
-        self.r4.setNeighbors([self.r1, self.r3])
-        self.r4.neighborDirections = {"north": self.r1, "east": self.r3}
-        self.r5.setNeighbors([self.r1, self.r3])
-        self.r5.neighborDirections = {"west": self.r1, "south": self.r3}
+        for item in itemData:
+            self.stuff.append(Stuff(itemData[item]["name"], itemData[item]["description"], itemData[item]["availableVerbs"]))
 
-        self.r1.setLongDescription("This is the long description for room1")
-        self.r2.setLongDescription("This is the long description for room2")
-        self.r3.setLongDescription("This is the long description for room3")
-        self.r4.setLongDescription("This is the long description for room4")
-        self.r5.setLongDescription("This is the long description for room5")
+        for idx, room in enumerate(roomData):
+            self.roomNames.append(roomData[room]["roomName"])
 
-        self.r1.setShortDescription("This is the short description for room1")
-        self.r2.setShortDescription("This is the short description for room2")
-        self.r3.setShortDescription("This is the short description for room3")
-        self.r4.setShortDescription("This is the short description for room4")
-        self.r5.setShortDescription("This is the short description for room5")
+            self.roomItems = []
+            for roomItem in roomData[room]["item"]:
+                for item in self.stuff:
+                    if item.name == roomItem:
+                        self.roomItems.append(item)
 
-        self.itemDescriptions = {"lamp": "A dusty lamp that seems to have something inside", "key1": "A long wooden key", "key2": "A small metal key", "stick": "A warbly walking stick"}
+            self.rooms.append(Room(roomData[room]["roomName"], self.roomItems, True))
+            if self.roomNames[idx] == "front yard":
+                self.initialRoom = self.rooms[idx]
 
-        self.rooms = [self.r1, self.r2, self.r3, self.r4, self.r5]
-        self.currentRoom = self.r1
+        for idx, room in enumerate(roomData):
+            neighbors = []
+            neighborDirections = {}
+
+            if roomData[room]["north"] in self.roomNames:
+                for neighbor in enumerate(self.rooms):
+                    if neighbor[1].name == roomData[room]["north"]:
+                        neighbors.append(neighbor[1])
+                        neighborDirections.update({"north":neighbor[1]})
+            if roomData[room]["south"] in self.roomNames:
+                for neighbor in enumerate(self.rooms):
+                    if neighbor[1].name == roomData[room]["south"]:
+                        neighbors.append(neighbor[1])
+                        neighborDirections.update({"south":neighbor[1]})
+            if roomData[room]["east"] in self.roomNames:
+                for neighbor in enumerate(self.rooms):
+                    if neighbor[1].name == roomData[room]["east"]:
+                        neighbors.append(neighbor[1])
+                        neighborDirections.update({"east":neighbor[1]})
+                for neighbor in enumerate(self.rooms):
+                    if neighbor[1].name == roomData[room]["west"]:
+                        neighbors.append(neighbor[1])
+                        neighborDirections.update({"west":neighbor[1]})
+
+            self.rooms[idx].setNeighbors(neighbors)
+            self.rooms[idx].neighborDirections = neighborDirections
+
+            self.rooms[idx].setLongDescription(roomData[room]["longDescription"])
+            self.rooms[idx].setShortDescription(roomData[room]["shortDescription"])
+        self.currentRoom = self.initialRoom
 
     gameName = "nameMe"

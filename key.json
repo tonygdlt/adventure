@@ -1,0 +1,8 @@
+{
+  "key": 
+  {
+    "name": "key",
+    "description": "unlocks doors",
+    "availableVerbs": [ "take", "drop" ]
+  }
+}

@@ -1,11 +1,19 @@
 import sys
 from Game import Game
 import json
+from Stuff import Stuff
 
-actionVerb = ["look", "go", "take", "drop"]
+def readRoomFiles(roomFileNames, listOfRooms):
+    for i in range(0, len(roomFileNames)):
+        with open(roomFileNames[i], 'r') as name:
+            listOfRooms.update(json.load(name))
+    return listOfRooms
+
+#verb with object
+actionVerb = ["look", "go", "take", "drop", "hit", "eat"]
 directionVerb = ["north", "south", "east", "west"]
-#preposition = ["to", ]
 menuVerb = ["start", "loadgame", "savegame"]
+#verb without object
 singleVerb = ["help", "inventory"]
 
 # verbs method ---------------------------------------
@@ -16,10 +24,13 @@ def lookItem(restOfTheCommand, game):
     words = restOfTheCommand
 	#if preposition provided
     if words and words[0] == "at":
-        item = words[1]
-        if words[1] in game.currentRoom.items:
-            print game.itemDescriptions[words[1]]
-        else:
+        item = words[-1]
+        itemValid = False
+        for stuff in game.currentRoom.items:
+            if item == stuff.name:
+                print stuff.description
+                itemValid = True
+        if not itemValid:
             print "Nothing to look at."
     else:
         print game.currentRoom.longDesc
@@ -34,6 +45,8 @@ def enterRoom(room, game):
     else:
         print game.currentRoom.shortDesc
 
+    showItemsInTheRoom(game)
+    
     print "Neighboring rooms:"
     for i in room.neighbors:
         print i.name
@@ -46,16 +59,17 @@ def directionWhere(direction, game):
                 isValidNeighbor = True
                 game.currentRoom = game.currentRoom.neighborDirections[direction]
                 enterRoom(game.currentRoom, game)
+                return
+            else:
+                print "You cannot go in that direction."
 
 def goWhere(restOfTheCommand, game):
 	#print restOfTheCommand[0]
     words = restOfTheCommand
-	#if preposition provided
-	#if words[0] == "to":
-		#location = words[0]
-	#else:
-		#location = words[0]
-    location = words[-1]
+    if len(words) == 2:
+        location = words[-2] + " " + words[-1]
+    else:
+        location = words[-1]
 
     isValidNeighbor = False
     for i in game.rooms:
@@ -89,36 +103,53 @@ def takeItem(item, game):
     if isAlreadyInBag == True:
         print "Your bag already contains that item!"
     else:
-        if item[0] in game.currentRoom.items:
-            game.bag.items.append(item[0])
-            game.currentRoom.items.remove(item[0])
-            print "Placed", item[0], "in bag."
-        else:
-            print "No", item[0], "to pick up."
+        itemFound = False
+        for stuff in game.currentRoom.items:
+            if item[0] == stuff.name:
+                game.bag.items.append(stuff)
+                game.currentRoom.items.remove(stuff)
+                itemFound = True
+                print "Placed", stuff.name, "in bag."
+        if itemFound == False:
+            print "No", item[0], "to pick up."            
 
 #drop object in current room, removing it from your inventory
 def dropItem(item, game):
-    if item[0] in game.bag.items:
-        if game.currentRoom.itemsAreDroppable == True:
-            game.bag.items.remove(item[0])
-            game.currentRoom.dropItem(item[0])
-            print "Dropped", item[0]
-        else:
-            print "Can't drop that here!"
-    else:
-        print "No", item[0], "in bag."
+    foundInTheBag = False
+    for stuff in game.bag.items:
+        if item[0] == stuff.name:
+            foundInTheBag = True
+            if game.currentRoom.itemsAreDroppable == True:
+                game.bag.items.remove(stuff)
+                game.currentRoom.dropItem(stuff)
+                print "Dropped", stuff.name
+            else:
+                print "Can't drop that here!"
+    if not foundInTheBag:
+        print "No", stuff, "in bag."
 
 #list a set of verbs the game understands
 def helpUser(game):
 	print "following is the list of verbs the game understands:"
 	for verb in dispatch:
 		print verb
+
+#
+def hitItem(restOfTheCommand, game):
+    item = restOfTheCommand[-1]
+    print "hit", item
+
+
+def eatItem(restOfTheCommand, game):
+    item = restOfTheCommand[-1]
+    print "eat", item
+
 #
 def checkInventory(game):
     if not game.bag.items:
         print "Bag is empty."
-    for i in game.bag.items:
-        print i
+    for stuff in game.bag.items:
+        print stuff.name
 
 def startGame(game):
     print "Welcome!"
@@ -139,7 +170,17 @@ def resumeGame(game):
 
     roomCnt = 0
     for i in jsonData["list"][loadNum-1]["items"]:
-        game.rooms[roomCnt].items = i
+        itemList = []
+        #print "room", roomCnt
+        if len(i) == 0:
+            pass
+        else:
+            for s in i:
+                #string to json
+                print s
+                t = json.loads(s)
+                itemList.append(Stuff(t['name'], t['description'], t['availableVerbs']))
+        game.rooms[roomCnt].items = itemList
         roomCnt = roomCnt+1
 
     print "Game successfully loaded."
@@ -147,14 +188,19 @@ def resumeGame(game):
 def saveGame(game):
     roomItemsGen = (i.items for i in game.rooms)
     roomItems = []
-    for i in roomItemsGen:
-        roomItems.append(i)
+    for itemList in roomItemsGen:
+        temp = []
+        for item in itemList:
+            temp.append(json.dumps(item.__dict__))
+        roomItems.append(temp)
 
     print "Enter a name for the save file."
     saveName = raw_input("> ")
     game.gameName = saveName
     jsonToWrite = {"room":game.currentRoom.name, "bag":game.bag.items, "name":game.gameName, "items":roomItems}
-
+    
+    #print jsonToWrite
+    
     with open('savedGames.txt', 'r+') as f:
         data = json.load(f)
         data["list"].append(jsonToWrite)
@@ -168,7 +214,7 @@ def saveGame(game):
 dispatch = {"start": startGame, "loadgame": resumeGame, "savegame": saveGame, 
 			"look": lookItem, "go": goWhere, "take": takeItem, "drop": dropItem, "help": helpUser,
 			"inventory": checkInventory, "north": directionWhere, "south": directionWhere,
-            "east": directionWhere, "west": directionWhere, "room": roomWhere}
+            "east": directionWhere, "west": directionWhere, "room": roomWhere, "hit": hitItem, "eat": eatItem }
 
 # helper ------------------------------------------------
 def isActionVerb(verb):
@@ -185,9 +231,20 @@ def isDirectionVerb(verb):
 
 def isRoomVerb(verb, game):
     for i in game.currentRoom.neighbors:
+        #print ">>", verb, i.name, "<<"
         if verb == i.name:
             return True
     return False
+
+def showItemsInTheRoom(game):
+    if len(game.currentRoom.items) == 0:
+        print "It seems like an empty room."
+    else:
+        print "Here are items in the room:"
+        for stuff in game.currentRoom.items:
+            print stuff.name
+    print " "
+
 #--------------------------------------------------------
 
 def commandParsing(userInput, game):
@@ -195,15 +252,16 @@ def commandParsing(userInput, game):
 	#required verbs and phrases
     verb = userInput.split()[0].lower()
 	#check the verb is in the list
-    if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb) or isDirectionVerb(verb) or isRoomVerb(verb, game):
+    if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb) or isDirectionVerb(verb) or isRoomVerb(verb, game) or isRoomVerb(userInput, game):
         if isMenuVerb(verb) or isSingleVerb(verb):
             dispatch[verb](game)
         elif isDirectionVerb(verb):
             dispatch[verb](verb, game)
         elif isRoomVerb(verb, game):
             dispatch["room"](verb, game)
+        elif isRoomVerb(userInput, game): #2-word room
+            dispatch["room"](userInput, game)
         else:
-            isRoomVerb(verb, game)
             restOfTheCommand = userInput.lower().split()[1:]
             dispatch[verb](restOfTheCommand, game)
     else:
@@ -211,7 +269,15 @@ def commandParsing(userInput, game):
     return
 
 def main():
-    game = Game()
+    roomFileNames = ["frontYard.json", "porch.json"]
+    itemFileNames = ["key.json", "lamp.json"]
+    listOfRooms = {}
+    listOfItems = {}
+
+    roomData = readRoomFiles(roomFileNames, listOfRooms)
+    itemData = readRoomFiles(itemFileNames, listOfItems)
+
+    game = Game(roomData, itemData)
     print("                             __                     __                    ")
     print("      .----.-----. .---.-.--|  |.--.--.-----.-----.|  |_.--.--.----.-----.")
     print("      |  __|__ --| |  _  |  _  ||  |  |  -__|     ||   _|  |  |   _|  -__|")
@@ -221,17 +287,20 @@ def main():
     gameStarted = False
     while gameStarted == False:
         command = raw_input("> ")
+        #command = sys.stdin.readline().rstrip('\n')
         if isMenuVerb(command):
             gameStarted = True
             commandParsing(command, game)
         else:
             print "Please enter a valid choice."
 
-    print game.r1.longDesc
-    game.r1.hasBeenVisited = True
+    print game.currentRoom.longDesc
+    game.currentRoom.hasBeenVisited = True
+
+    showItemsInTheRoom(game)
 
     print "Neighboring rooms:"
-    for i in game.r1.neighbors:
+    for i in game.currentRoom.neighbors:
         print i.name
 
     while True:
