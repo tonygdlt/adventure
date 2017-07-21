@@ -160,46 +160,53 @@ def resumeGame(game):
     for i in range(len(jsonData["list"])):
         print i+1,"\b.",jsonData["list"][i]["name"]
     loadNum = input("> ")
+
     roomName = jsonData["list"][loadNum-1]["room"]
     for i in game.rooms:
         if i.name == roomName:
             game.currentRoom = i
     game.gameName = jsonData["list"][loadNum-1]["name"]
-    for i in jsonData["list"][loadNum-1]["bag"]:
-        game.bag.items.append(i)
 
-    roomCnt = 0
+    del game.bag.items[:]
+    for i in jsonData["list"][loadNum-1]["bag"]:
+        for j in game.stuff:
+            if j.name == i:
+                game.bag.items.append(j)
+
+    #print jsonData["list"][loadNum-1]["items"]
     for i in jsonData["list"][loadNum-1]["items"]:
-        itemList = []
-        #print "room", roomCnt
-        if len(i) == 0:
-            pass
-        else:
-            for s in i:
-                #string to json
-                print s
-                t = json.loads(s)
-                itemList.append(Stuff(t['name'], t['description'], t['availableVerbs']))
-        game.rooms[roomCnt].items = itemList
-        roomCnt = roomCnt+1
+        roomItemNames = []
+        for j in jsonData["list"][loadNum-1]["items"][i]:
+            roomItemNames.append(j)
+
+        roomItems = []
+        for roomItem in roomItemNames:
+            for item in game.stuff:
+                if item.name == roomItem:
+                    roomItems.append(item)
+
+        for room in game.rooms:
+            if i == room.name:
+                room.items = roomItems
 
     print "Game successfully loaded."
 
 def saveGame(game):
-    roomItemsGen = (i.items for i in game.rooms)
-    roomItems = []
-    for itemList in roomItemsGen:
-        temp = []
-        for item in itemList:
-            temp.append(json.dumps(item.__dict__))
-        roomItems.append(temp)
+    roomList = {}
+    for room in game.rooms:
+        itemList = []
+        for item in room.items:
+            itemList.append(item.name)
+        roomList.update({room.name:itemList})
+
+    itemList = []
+    for item in game.bag.items:
+        itemList.append(item.name)
 
     print "Enter a name for the save file."
     saveName = raw_input("> ")
     game.gameName = saveName
-    jsonToWrite = {"room":game.currentRoom.name, "bag":game.bag.items, "name":game.gameName, "items":roomItems}
-    
-    #print jsonToWrite
+    jsonToWrite = {"room":game.currentRoom.name, "bag":itemList, "name":game.gameName, "items":roomList}
     
     with open('savedGames.txt', 'r+') as f:
         data = json.load(f)
@@ -240,6 +247,7 @@ def showItemsInTheRoom(game):
     if len(game.currentRoom.items) == 0:
         print "It seems like an empty room."
     else:
+        #print game.currentRoom.items
         print "Here are items in the room:"
         for stuff in game.currentRoom.items:
             print stuff.name
