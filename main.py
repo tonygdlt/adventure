@@ -137,12 +137,33 @@ def helpUser(game):
 #
 def hitItem(restOfTheCommand, game):
     item = restOfTheCommand[-1]
-    print "hit", item
+    itemFound = False
+    for stuff in game.currentRoom.items:
+        if item == stuff.name:
+            itemFound = True
+            if "hit" in stuff.availableVerbs:
+                print "Hit", stuff.name
+            else:
+                print "You can't hit that."
+
+    if itemFound == False:
+        print "No", item, "to hit."
 
 
 def eatItem(restOfTheCommand, game):
     item = restOfTheCommand[-1]
-    print "eat", item
+    itemFound = False
+    for stuff in game.currentRoom.items:
+        if item == stuff.name:
+            itemFound = True
+            if "eat" in stuff.availableVerbs:
+                game.currentRoom.items.remove(stuff)
+                print "Ate", stuff.name
+            else:
+                print "You can't eat that."
+
+    if itemFound == False:
+        print "No", item, "to eat."
 
 #
 def checkInventory(game):
@@ -173,7 +194,6 @@ def resumeGame(game):
             if j.name == i:
                 game.bag.items.append(j)
 
-    #print jsonData["list"][loadNum-1]["items"]
     for i in jsonData["list"][loadNum-1]["items"]:
         roomItemNames = []
         for j in jsonData["list"][loadNum-1]["items"][i]:
