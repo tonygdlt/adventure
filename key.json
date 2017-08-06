@@ -3,6 +3,7 @@
   {
     "name": "key",
     "description": "unlocks doors",
-    "availableVerbs": ["eat"]
+    "availableVerbs": ["eat"],
+    "relatedItems": ["none"]
   }
 }

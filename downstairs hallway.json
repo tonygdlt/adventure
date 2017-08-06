@@ -1,0 +1,17 @@
+{
+	"downstairs hallway":
+	{
+		"roomName":"downstairs hallway",
+		"longDescription":"This a placeholder for the long description",
+		"shortDescription":"This a placeholder for the short description",
+		"features": [
+			"feature1",
+			"feature2"],
+		"north":"placeholder-downstairs-north",
+		"south":"foyer",
+		"east":"placeholder-downstairs-east",
+	    "west": "placeholder-downstairs-west",
+	    "item": ["picture", "rug"],
+	    "hidden": ["none"]
+	}
+}

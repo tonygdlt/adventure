@@ -7,10 +7,11 @@
 		"features": [
 			"feature1",
 			"feature2"],
-		"north":"Foyer",
+		"north":"foyer",
 		"south":"front yard",
 		"east":"you can see the railing, and the yard beyond. There is nothing there that can help you.",
 		"west":"you can see an old porch swing. It won't hold your weight.",
-		"item":["key", "lamp"]
+		"item":["porch swing", "door lock"],
+		"hidden": ["none"]
 	}
 }

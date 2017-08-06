@@ -10,9 +10,9 @@ def readRoomFiles(roomFileNames, listOfRooms):
     return listOfRooms
 
 #verb with object
-actionVerb = ["look", "go", "take", "drop", "hit", "eat"]
+actionVerb = ["look", "go", "take", "drop", "hit", "eat", "open"]
 directionVerb = ["north", "south", "east", "west"]
-menuVerb = ["start", "loadgame", "savegame"]
+menuVerb = ["start", "loadgame", "savegame", "quit"]
 #verb without object
 singleVerb = ["help", "inventory"]
 
@@ -24,7 +24,8 @@ def lookItem(restOfTheCommand, game):
     words = restOfTheCommand
 	#if preposition provided
     if words and words[0] == "at":
-        item = words[-1]
+        pos = words.index("at")
+        item = " ".join(words[i] for i in range(pos+1, len(words)))
         itemValid = False
         for stuff in game.currentRoom.items:
             if item == stuff.name:
@@ -64,7 +65,6 @@ def directionWhere(direction, game):
                 print "You cannot go in that direction."
 
 def goWhere(restOfTheCommand, game):
-	#print restOfTheCommand[0]
     words = restOfTheCommand
     if len(words) == 2:
         location = words[-2] + " " + words[-1]
@@ -72,13 +72,16 @@ def goWhere(restOfTheCommand, game):
         location = words[-1]
 
     isValidNeighbor = False
+    enteredNewRoom = False
+    
     for i in game.rooms:
         if i == game.currentRoom:
             for j in i.neighbors:
-                if location in game.currentRoom.neighborDirections:
+                if (location in game.currentRoom.neighborDirections) and (enteredNewRoom == False):
                     isValidNeighbor = True
                     game.currentRoom = game.currentRoom.neighborDirections[location]
                     enterRoom(game.currentRoom, game)
+                    enteredNewRoom = True
 
                 elif j.name == location: #for context 'go room'
                     isValidNeighbor = True
@@ -96,28 +99,38 @@ def roomWhere(roomName, game):
 
 #acquire an object, putting it into your inventory
 def takeItem(item, game):
+    if len(item) == 2:
+        item = item[-2] + " " + item[-1]
+    else:
+        item = item[-1]
+
     isAlreadyInBag = False
     for i in game.bag.items:
-        if i == item[0]:
+        if i == item:
             isAlreadyInBag = True
     if isAlreadyInBag == True:
         print "Your bag already contains that item!"
     else:
         itemFound = False
         for stuff in game.currentRoom.items:
-            if item[0] == stuff.name:
+            if item == stuff.name:
                 game.bag.items.append(stuff)
                 game.currentRoom.items.remove(stuff)
                 itemFound = True
                 print "Placed", stuff.name, "in bag."
         if itemFound == False:
-            print "No", item[0], "to pick up."            
+            print "No", item, "to pick up."            
 
 #drop object in current room, removing it from your inventory
 def dropItem(item, game):
+    if len(item) == 2:
+        item = item[-2] + " " + item[-1]
+    else:
+        item = item[-1]
+
     foundInTheBag = False
     for stuff in game.bag.items:
-        if item[0] == stuff.name:
+        if stuff.name == item:
             foundInTheBag = True
             if game.currentRoom.itemsAreDroppable == True:
                 game.bag.items.remove(stuff)
@@ -126,7 +139,7 @@ def dropItem(item, game):
             else:
                 print "Can't drop that here!"
     if not foundInTheBag:
-        print "No", stuff, "in bag."
+        print "No", item, "in bag."
 
 #list a set of verbs the game understands
 def helpUser(game):
@@ -135,11 +148,15 @@ def helpUser(game):
 		print verb
 
 #
-def hitItem(restOfTheCommand, game):
-    item = restOfTheCommand[-1]
+def hitItem(item, game):
+    if len(item) == 2:
+        item = item[-2] + " " + item[-1]
+    else:
+        item = item[-1]
+
     itemFound = False
     for stuff in game.currentRoom.items:
-        if item == stuff.name:
+        if stuff.name == item:
             itemFound = True
             if "hit" in stuff.availableVerbs:
                 print "Hit", stuff.name
@@ -150,11 +167,15 @@ def hitItem(restOfTheCommand, game):
         print "No", item, "to hit."
 
 
-def eatItem(restOfTheCommand, game):
-    item = restOfTheCommand[-1]
+def eatItem(item, game):
+    if len(item) == 2:
+        item = item[-2] + " " + item[-1]
+    else:
+        item = item[-1]
+
     itemFound = False
     for stuff in game.currentRoom.items:
-        if item == stuff.name:
+        if stuff.name == item:
             itemFound = True
             if "eat" in stuff.availableVerbs:
                 game.currentRoom.items.remove(stuff)
@@ -164,6 +185,50 @@ def eatItem(restOfTheCommand, game):
 
     if itemFound == False:
         print "No", item, "to eat."
+
+def openItem(item, game):
+    #when player opens a door to access another room
+    if item[-1] == "lock":
+        openDoor(item, game)
+        return
+    #when player opens item
+    if len(item) == 2:
+        item = item[-2] + " " + item[-1]
+    else:
+        item = item[-1]
+
+    itemFound = False
+    for stuff in game.currentRoom.items:
+        if stuff.name == item:
+            itemFound = True
+            if "open" in stuff.availableVerbs:
+                #game.currentRoom.items.remove(stuff)
+                print "opened", stuff.name
+                empty = True
+                for item in game.currentRoom.items:
+                    if stuff.relatedItems[0] == item.name:
+                        empty = False
+                if empty:
+                    print "nothing inside of", stuff.name
+                else:
+                    print "found", stuff.relatedItems[0]
+            else:
+                print "You can't open that."
+
+    if itemFound == False:
+        print "No", item, "to open."
+
+#
+def openDoor(restOfTheCommand, game):
+    #check if player with key
+    foundKey = False
+    for item in game.bag.items:
+        if item.name == "key":
+            foundKey = True
+    if foundKey:
+        print "open door"
+    else:
+        print "you need key to open it"
 
 #
 def checkInventory(game):
@@ -235,11 +300,14 @@ def saveGame(game):
         json.dump(data, f)
     print "Game successfully saved."
 
+def quitGame(game):
+    sys.exit()
+
 #--------------------------------------------------------
 
 
-dispatch = {"start": startGame, "loadgame": resumeGame, "savegame": saveGame, 
-			"look": lookItem, "go": goWhere, "take": takeItem, "drop": dropItem, "help": helpUser,
+dispatch = {"start": startGame, "loadgame": resumeGame, "savegame": saveGame, "quit": quitGame,
+			"look": lookItem, "go": goWhere, "take": takeItem, "open": openItem, "drop": dropItem, "help": helpUser,
 			"inventory": checkInventory, "north": directionWhere, "south": directionWhere,
             "east": directionWhere, "west": directionWhere, "room": roomWhere, "hit": hitItem, "eat": eatItem }
 
@@ -270,7 +338,12 @@ def showItemsInTheRoom(game):
         #print game.currentRoom.items
         print "Here are items in the room:"
         for stuff in game.currentRoom.items:
-            print stuff.name
+            found = False
+            for hidden in game.currentRoom.hiddenItems:
+                if hidden.name == stuff.name:
+                    found = True
+            if found == False:
+                print stuff.name
     print " "
 
 #--------------------------------------------------------
@@ -291,14 +364,15 @@ def commandParsing(userInput, game):
             dispatch["room"](userInput, game)
         else:
             restOfTheCommand = userInput.lower().split()[1:]
+            #print "debug: rest: ", restOfTheCommand, " verb: ", verb
             dispatch[verb](restOfTheCommand, game)
     else:
         print "use 'help' for instruction"
     return
 
 def main():
-    roomFileNames = ["frontYard.json", "porch.json"]
-    itemFileNames = ["key.json", "lamp.json"]
+    roomFileNames = ["frontYard.json", "porch.json", "foyer.json", "downstairs hallway.json", "living room.json"]
+    itemFileNames = ["key.json", "lamp.json", "rock.json", "light switch.json", "bench.json", "picture.json", "rug.json", "porch swing.json", "door lock.json", "mirror.json"]
     listOfRooms = {}
     listOfItems = {}
 

@@ -1,9 +1,10 @@
 class Room(object):
-    def __init__(self, name, items, itemsAreDroppable):
+    def __init__(self, name, items, itemsAreDroppable, hiddenItems):
         self.name = name
         self.hasBeenVisited = False
         self.items = items
         self.itemsAreDroppable = itemsAreDroppable
+        self.hiddenItems = hiddenItems
     def setNeighbors(self, neighborArr):
         self.neighbors = neighborArr
     def setLongDescription(self, desc):

@@ -1,17 +1,17 @@
 {
-	"frontYard":
+	"foyer":
 	{
-		"roomName":"front yard",
+		"roomName":"foyer",
 		"longDescription":"This a placeholder for the long description",
 		"shortDescription":"This a placeholder for the short description",
 		"features": [
 			"feature1",
 			"feature2"],
-		"north":"porch",
-		"south":"Your car",
+		"north":"downstairs hallway",
+		"south":"porch",
 		"east":"the neighbors house. I don't think they want company this late.",
-	    "west": "a dark forest. I don't want to go in there at night.",
-	    "item": ["rock", "key"],
-	    "hidden": ["key"]
+	    "west":"living room",
+	    "item": ["bench", "light switch"],
+	    "hidden": ["none"]
 	}
 }

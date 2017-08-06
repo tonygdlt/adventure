@@ -12,7 +12,7 @@ class Game(object):
         self.rooms = list()
 
         for item in itemData:
-            self.stuff.append(Stuff(itemData[item]["name"], itemData[item]["description"], itemData[item]["availableVerbs"]))
+            self.stuff.append(Stuff(itemData[item]["name"], itemData[item]["description"], itemData[item]["availableVerbs"], itemData[item]["relatedItems"]))
 
         for idx, room in enumerate(roomData):
             self.roomNames.append(roomData[room]["roomName"])
@@ -23,7 +23,14 @@ class Game(object):
                     if item.name == roomItem:
                         self.roomItems.append(item)
 
-            self.rooms.append(Room(roomData[room]["roomName"], self.roomItems, True))
+            #adding hidden items
+            self.hiddenItems = []
+            for roomHiddenItem in roomData[room]["hidden"]:
+                for item in self.stuff:
+                    if item.name == roomHiddenItem:
+                        self.hiddenItems.append(item)
+
+            self.rooms.append(Room(roomData[room]["roomName"], self.roomItems, True, self.hiddenItems))
             if self.roomNames[idx] == "front yard":
                 self.initialRoom = self.rooms[idx]
 
@@ -46,6 +53,7 @@ class Game(object):
                     if neighbor[1].name == roomData[room]["east"]:
                         neighbors.append(neighbor[1])
                         neighborDirections.update({"east":neighbor[1]})
+            if roomData[room]["west"] in self.roomNames:
                 for neighbor in enumerate(self.rooms):
                     if neighbor[1].name == roomData[room]["west"]:
                         neighbors.append(neighbor[1])
