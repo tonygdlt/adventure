@@ -2,12 +2,15 @@ import sys
 from Game import Game
 import json
 from Stuff import Stuff
+from ReadDataFiles import *
+
 
 def readRoomFiles(roomFileNames, listOfRooms):
     for i in range(0, len(roomFileNames)):
         with open(roomFileNames[i], 'r') as name:
             listOfRooms.update(json.load(name))
     return listOfRooms
+
 
 #verb with object
 actionVerb = ["look", "go", "take", "drop", "hit", "eat", "open"]
@@ -45,9 +48,7 @@ def enterRoom(room, game):
         game.currentRoom.hasBeenVisited = True
     else:
         print game.currentRoom.shortDesc
-
-    showItemsInTheRoom(game)
-    
+    #showItemsInTheRoom(game)
     print "Neighboring rooms:"
     for i in room.neighbors:
         print i.name
@@ -114,23 +115,21 @@ def takeItem(item, game):
         itemFound = False
         for stuff in game.currentRoom.items:
             if item == stuff.name:
-                game.bag.items.append(stuff)
-                game.currentRoom.items.remove(stuff)
                 itemFound = True
-                print "Placed", stuff.name, "in bag."
+                if "take" in stuff.availableVerbs:
+                    game.bag.items.append(stuff)
+                    game.currentRoom.items.remove(stuff)
+                    print "Placed", stuff.name, "in bag."
+                else:
+                    print "You cannot take that item."
         if itemFound == False:
-            print "No", item, "to pick up."            
+            print "No", item, "to pick up."         
 
 #drop object in current room, removing it from your inventory
 def dropItem(item, game):
-    if len(item) == 2:
-        item = item[-2] + " " + item[-1]
-    else:
-        item = item[-1]
-
     foundInTheBag = False
     for stuff in game.bag.items:
-        if stuff.name == item:
+        if item[0] == stuff.name:
             foundInTheBag = True
             if game.currentRoom.itemsAreDroppable == True:
                 game.bag.items.remove(stuff)
@@ -139,7 +138,7 @@ def dropItem(item, game):
             else:
                 print "Can't drop that here!"
     if not foundInTheBag:
-        print "No", item, "in bag."
+        print "No", stuff, "in bag."
 
 #list a set of verbs the game understands
 def helpUser(game):
@@ -363,7 +362,8 @@ def commandParsing(userInput, game):
         elif isRoomVerb(userInput, game): #2-word room
             dispatch["room"](userInput, game)
         else:
-            restOfTheCommand = userInput.lower().split()[1:]
+            restOfTheCommand = userInput.split()[1:]
+            #restOfTheCommand = userInput.lower().split()[1:]
             #print "debug: rest: ", restOfTheCommand, " verb: ", verb
             dispatch[verb](restOfTheCommand, game)
     else:
@@ -371,15 +371,17 @@ def commandParsing(userInput, game):
     return
 
 def main():
-    roomFileNames = ["frontYard.json", "porch.json", "foyer.json", "downstairs hallway.json", "living room.json"]
+    #roomFileNames = ["frontYard.json", "porch.json", "foyer.json", "downstairs hallway.json", "living room.json"]
     itemFileNames = ["key.json", "lamp.json", "rock.json", "light switch.json", "bench.json", "picture.json", "rug.json", "porch swing.json", "door lock.json", "mirror.json"]
-    listOfRooms = {}
+    #listOfRooms = {}
     listOfItems = {}
 
-    roomData = readRoomFiles(roomFileNames, listOfRooms)
+    roomData = readRoomFile()
+    #roomData = readRoomFiles(roomFileNames, listOfRooms)
     itemData = readRoomFiles(itemFileNames, listOfItems)
 
     game = Game(roomData, itemData)
+    
     print("                             __                     __                    ")
     print("      .----.-----. .---.-.--|  |.--.--.-----.-----.|  |_.--.--.----.-----.")
     print("      |  __|__ --| |  _  |  _  ||  |  |  -__|     ||   _|  |  |   _|  -__|")
@@ -399,8 +401,9 @@ def main():
     print game.currentRoom.longDesc
     game.currentRoom.hasBeenVisited = True
 
-    showItemsInTheRoom(game)
+    #showItemsInTheRoom(game)
 
+    print ""
     print "Neighboring rooms:"
     for i in game.currentRoom.neighbors:
         print i.name
@@ -408,6 +411,6 @@ def main():
     while True:
         command = raw_input("> ")
         commandParsing(command, game)
-
+    
 if __name__ == "__main__":
-	main()
+    main()
