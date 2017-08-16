@@ -1,0 +1,8 @@
+{
+  "shower curtain": {
+    "name": "shower curtain",
+    "description": "boring old shower curtain that do nothing other than keep water from seeping out",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

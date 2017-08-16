@@ -1,0 +1,19 @@
+{
+	"Bathroom":
+	{
+		"roomName":"Bathroom",
+		"longDescription":"This a placeholder for the long description",
+		"shortDescription":"This a placeholder for the short description",
+		"features": [
+			"feature1",
+			"feature2"],
+		"neighbors":{
+			"north":"",
+			"south":"",
+			"east":"",
+			"west":"Downstairs Hallway"
+		},
+		"item":[],
+		"hidden": ["none"]
+	}
+}

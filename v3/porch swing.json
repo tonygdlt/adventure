@@ -1,0 +1,8 @@
+{
+  "porch swing": {
+    "name": "porch swing",
+    "description": "traditional natural wood swing",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

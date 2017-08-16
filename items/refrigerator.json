@@ -1,0 +1,9 @@
+{
+  "refrigerator": 
+  {
+    "name": "refrigerator",
+    "description": "In the corner of the kitch was a refrigerator, quite ordinary, white, with a smaller upper section above and a larger one below",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

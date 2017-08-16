@@ -1,0 +1,8 @@
+{
+  "picture": {
+    "name": "picture",
+    "description": "picture of a family. The people who lived here were a husband and wife and their daughter.",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

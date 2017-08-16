@@ -5,11 +5,15 @@ from Stuff import Stuff
 from ReadDataFiles import *
 
 
+listOfRooms=[]
+
+'''
 def readRoomFiles(roomFileNames, listOfRooms):
     for i in range(0, len(roomFileNames)):
         with open(roomFileNames[i], 'r') as name:
             listOfRooms.update(json.load(name))
     return listOfRooms
+'''
 
 
 #verb with object
@@ -65,13 +69,25 @@ def directionWhere(direction, game):
             else:
                 print "You cannot go in that direction."
 
-def goWhere(restOfTheCommand, game):
-    words = restOfTheCommand
-    if len(words) == 2:
-        location = words[-2] + " " + words[-1]
+# handle go + adjective + roomname and two-word roomname as well as capital letter in room name
+def determineLocation(words):
+    if len(words) == 1:
+        return words[-1]
     else:
-        location = words[-1]
+        if words[-1] in listOfRooms:
+            return words[-1]
+        elif words[-1].title() in listOfRooms:
+            return words[-1].title()
+        elif (words[-2] + " " + words[-1]) in listOfRooms:
+            return (words[-2] + " " + words[-1])
+        elif (words[-2].title() + " " + words[-1].title()) in listOfRooms:
+            return (words[-2].title() + " " + words[-1].title())
+        else:
+            return words
 
+def goWhere(words, game):
+    location = determineLocation(words)
+    #print "location", location
     isValidNeighbor = False
     enteredNewRoom = False
     
@@ -94,7 +110,7 @@ def goWhere(restOfTheCommand, game):
 
 def roomWhere(roomName, game):
     for i in game.rooms:
-        if i.name == roomName:
+        if i.name == roomName or i.name == roomName.title():
             game.currentRoom = i
             enterRoom(i, game)
 
@@ -127,9 +143,14 @@ def takeItem(item, game):
 
 #drop object in current room, removing it from your inventory
 def dropItem(item, game):
+    if len(item) == 2:
+        item = item[-2] + " " + item[-1]
+    else:
+        item = item[-1]
+
     foundInTheBag = False
     for stuff in game.bag.items:
-        if item[0] == stuff.name:
+        if item == stuff.name:
             foundInTheBag = True
             if game.currentRoom.itemsAreDroppable == True:
                 game.bag.items.remove(stuff)
@@ -138,7 +159,7 @@ def dropItem(item, game):
             else:
                 print "Can't drop that here!"
     if not foundInTheBag:
-        print "No", stuff, "in bag."
+        print "No", item, "in bag."
 
 #list a set of verbs the game understands
 def helpUser(game):
@@ -323,10 +344,11 @@ def isSingleVerb(verb):
 def isDirectionVerb(verb):
     return verb in directionVerb
 
-def isRoomVerb(verb, game):
+def isRoomVerb(roomName, game):
+    print "roomName", roomName
     for i in game.currentRoom.neighbors:
         #print ">>", verb, i.name, "<<"
-        if verb == i.name:
+        if roomName == i.name or roomName.title() == i.name:
             return True
     return False
 
@@ -348,38 +370,68 @@ def showItemsInTheRoom(game):
 #--------------------------------------------------------
 
 def commandParsing(userInput, game):
-	#print "this is the input", userInput
-	#required verbs and phrases
     verb = userInput.split()[0].lower()
 	#check the verb is in the list
-    if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb) or isDirectionVerb(verb) or isRoomVerb(verb, game) or isRoomVerb(userInput, game):
+    if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb) or isDirectionVerb(verb):
         if isMenuVerb(verb) or isSingleVerb(verb):
             dispatch[verb](game)
         elif isDirectionVerb(verb):
             dispatch[verb](verb, game)
-        elif isRoomVerb(verb, game):
-            dispatch["room"](verb, game)
-        elif isRoomVerb(userInput, game): #2-word room
-            dispatch["room"](userInput, game)
         else:
             restOfTheCommand = userInput.split()[1:]
             #restOfTheCommand = userInput.lower().split()[1:]
-            #print "debug: rest: ", restOfTheCommand, " verb: ", verb
             dispatch[verb](restOfTheCommand, game)
+    #handle 'adjective + room' or 'go + adjective + room'
+    elif isRoomVerb(userInput.split()[-1], game):
+        dispatch["room"](userInput.split()[-1], game)
+    #the string "userInput.split()[-2] + ' ' + userInput.split()[-1]" is a two-word room name
+    elif len(userInput.split()) >= 2 and isRoomVerb(userInput.split()[-2] + ' ' + userInput.split()[-1], game): #2-word room
+        dispatch["room"](userInput.split()[-2] + ' ' + userInput.split()[-1], game)
     else:
         print "use 'help' for instruction"
     return
 
+def checkGameStatus(game):
+    necklaceFound = False
+    dollFound = False
+    journalFound = False
+
+    for room in game.rooms:
+        if room.name == "Hidden Room":
+            for roomItem in room.items:
+                if roomItem.name == "necklace":
+                    if game.necklacePlaced == False:
+                        print "necklace in place"
+                    necklaceFound = True
+                elif roomItem.name == "doll":
+                    if game.dollPlaced == False:
+                        print "doll in place"
+                    dollFound = True
+                elif roomItem.name == "journal":
+                    if game.journalPlace == False:
+                        print "journal in place"
+                    journalFound = True
+
+    game.necklacePlaced = necklaceFound
+    game.dollPlaced = dollFound
+    game.journalPlaced = journalFound
+
+    if necklaceFound == True and dollFound == True and journalFound == True:
+        winGame()
+
+def winGame():
+    print "You win!"
+
 def main():
-    #roomFileNames = ["frontYard.json", "porch.json", "foyer.json", "downstairs hallway.json", "living room.json"]
-    itemFileNames = ["key.json", "lamp.json", "rock.json", "light switch.json", "bench.json", "picture.json", "rug.json", "porch swing.json", "door lock.json", "mirror.json"]
-    #listOfRooms = {}
-    listOfItems = {}
-
+    #load room and item data from file
     roomData = readRoomFile()
-    #roomData = readRoomFiles(roomFileNames, listOfRooms)
-    itemData = readRoomFiles(itemFileNames, listOfItems)
+    itemData = readItemFile()
+    
+    #store in global var listOfRooms
+    for room in roomData:
+        listOfRooms.append(room)
 
+    #set up game engine
     game = Game(roomData, itemData)
     
     print("                             __                     __                    ")
@@ -411,6 +463,7 @@ def main():
     while True:
         command = raw_input("> ")
         commandParsing(command, game)
+        checkGameStatus(game)
     
 if __name__ == "__main__":
     main()

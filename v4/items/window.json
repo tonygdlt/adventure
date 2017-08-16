@@ -1,0 +1,8 @@
+{
+  "window": {
+    "name": "window",
+    "description": "a window",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

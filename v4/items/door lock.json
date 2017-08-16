@@ -1,0 +1,8 @@
+{
+  "door lock": {
+    "name": "door lock",
+    "description": "an old door lock",
+    "availableVerbs": ["open"],
+    "relatedItems": ["none"]
+  }
+}

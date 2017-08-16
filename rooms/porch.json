@@ -1,0 +1,19 @@
+{
+	"Porch":
+		{
+			"roomName":"Porch",
+			"longDescription":"As you step onto the porch the wood groans with the effort of supporting your weight, but seems like it will hold. You can see the sea the grass in the front yard to the south moving slightly in the breeze. On the porch to the east you can see a jumbled pile of trash containing, among other things, pieces of broken chairs, a few articles of clothing, and old cardboard boxes that were falling apart due to exposure to the weather. To the north is the front door is the front door, which, surprisingly, still looks pretty sturdy. The porch swing on the west side of the porch was still attached to the roof of the porch, but looked like a stiff breeze could blow it down any minute. ",
+			"shortDescription":"The porch is a bit rickety, but it seems to be able to hold your weight. To the south is the front yard. On the east side of the porch is a pile of broken furniture, clothes, and other garbage. The porch swing is to the west. To the north is the front door of the house.",
+			"features": [
+				"feature1",
+				"feature2"],
+			"neighbors":	
+			{
+				"north":"Foyer",
+				"south":"Front Yard",
+				"east":"you can see the railing, and the yard beyond. There is nothing there that can help you.",
+				"west":"you can see an old porch swing. It won't hold your weight."
+			},
+			"item":["porch swing", "door lock"]
+		}
+	}

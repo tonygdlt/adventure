@@ -1,0 +1,9 @@
+{
+  "bench": 
+  {
+    "name": "bench",
+    "description": "an entryway bench",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

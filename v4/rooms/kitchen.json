@@ -1,0 +1,19 @@
+{
+	"Kitchen":
+	{
+		"roomName":"Kitchen",
+		"longDescription":"This a placeholder for the long description",
+		"shortDescription":"This a placeholder for the short description",
+		"features": [
+			"feature1",
+			"feature2"],
+		"neighbors":{
+			"north":"Backyard",
+			"south":"Dining Room",
+			"east":"",
+			"west":"Basement"
+		},
+		"item":[],
+		"hidden": ["none"]
+	}
+}
