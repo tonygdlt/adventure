@@ -9,7 +9,7 @@ listOfRooms=[]
 
 
 #verb with object
-actionVerb = ["look", "go", "take", "drop", "hit", "eat", "open"]
+actionVerb = ["look", "go", "take", "drop", "hit", "lift", "open"]
 directionVerb = ["north", "south", "east", "west"]
 menuVerb = ["start", "loadgame", "savegame", "quit"]
 #verb without object
@@ -226,11 +226,8 @@ def hitItem(item, game):
     if itemFound == False:
         print "No", item, "to hit."
 
-
-def eatItem(item, game):
-    if len(item) == 3:
-        item = item[-3] + " " + item[-2] + " " + item[-1]
-    elif len(item) == 2:
+def liftItem(item, game):
+    if len(item) == 2:
         item = item[-2] + " " + item[-1]
     else:
         item = item[-1]
@@ -239,14 +236,21 @@ def eatItem(item, game):
     for stuff in game.currentRoom.items:
         if stuff.name == item:
             itemFound = True
-            if "eat" in stuff.availableVerbs:
-                game.currentRoom.items.remove(stuff)
-                print "Ate", stuff.name
+            if "lift" in stuff.availableVerbs:
+                print "lifted", stuff.name
+                empty = True
+                for item in game.currentRoom.items:
+                    if stuff.relatedItems[0] == item.name:
+                        empty = False
+                if empty:
+                    print "nothing under", stuff.name
+                else:
+                    print "found", stuff.relatedItems[0]
             else:
-                print "You can't eat that."
+                print "You can't lift that."
 
     if itemFound == False:
-        print "No", item, "to eat."
+        print "No", item, "to lift."
 
 def openItem(item, game):
     #when player opens a door to access another room
@@ -371,7 +375,7 @@ def quitGame(game):
 dispatch = {"start": startGame, "loadgame": resumeGame, "savegame": saveGame, "quit": quitGame,
 			"look": lookItem, "go": goWhere, "take": takeItem, "open": openItem, "drop": dropItem, "help": helpUser,
 			"inventory": checkInventory, "north": directionWhere, "south": directionWhere,
-            "east": directionWhere, "west": directionWhere, "room": roomWhere, "hit": hitItem, "eat": eatItem }
+            "east": directionWhere, "west": directionWhere, "room": roomWhere, "hit": hitItem, "lift": liftItem }
 
 # helper ------------------------------------------------
 def isActionVerb(verb):

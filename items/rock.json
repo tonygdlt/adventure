@@ -3,7 +3,7 @@
   {
     "name": "rock",
     "description": "seems like a fake rock and has something inside",
-    "availableVerbs": ["open"],
+    "availableVerbs": ["lift"],
     "relatedItems": ["key"]
   }
 }

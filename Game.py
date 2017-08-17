@@ -38,8 +38,7 @@ class Game(object):
                             self.hiddenItems.append(item)
 
             self.rooms.append(Room(roomData[room]["roomName"], self.roomItems, True, self.hiddenItems))
-            #if self.roomNames[idx] == "Front Yard":
-            if self.roomNames[idx] == "Upstairs Hallway":
+            if self.roomNames[idx] == "Front Yard":
                 self.initialRoom = self.rooms[idx]
 
         for idx, room in enumerate(roomData):
