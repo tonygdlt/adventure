@@ -10,6 +10,7 @@ class Game(object):
         self.stuff = list()
         self.roomNames = []
         self.rooms = list()
+        self.rockLifted = False
         self.necklacePlaced = False
         self.dollPlaced = False
         self.journalPlaced = False
