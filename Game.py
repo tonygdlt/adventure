@@ -10,7 +10,9 @@ class Game(object):
         self.stuff = list()
         self.roomNames = []
         self.rooms = list()
-        self.status = {"rockLifted": False, "necklacePlaced": False, "dollPlaced": False, "journalPlaced": False, "foyerUnlocked": False, "shedUnlocked": False, "bedroomUnlocked": False}
+        self.status = {"rockLifted": False, "necklacePlaced": False, "dollPlaced": False, 
+                       "journalPlaced": False, "foyerUnlocked": False, "shedUnlocked": False, 
+                       "bedroomUnlocked": False, "dresserOpened": False, "toolboxOpened": False}
 
         for item in itemData:
             self.stuff.append(Stuff(itemData[item]["name"], itemData[item]["description"], itemData[item]["availableVerbs"], itemData[item]["relatedItems"]))
@@ -26,11 +28,10 @@ class Game(object):
 
             #adding hidden items
             self.hiddenItems = []
-            if hasattr(roomData[room], "hidden"):
-                for roomHiddenItem in ["hidden"]:
-                    for item in self.stuff:
-                        if item.name == roomHiddenItem:
-                            self.hiddenItems.append(item)
+            for roomHiddenItem in roomData[room]["hidden"]:
+                for item in self.stuff:
+                    if item.name == roomHiddenItem:
+                        self.hiddenItems.append(item)
 
             self.rooms.append(Room(roomData[room]["roomName"], self.roomItems, True, self.hiddenItems))
             if self.roomNames[idx] == "Front Yard":

@@ -15,6 +15,6 @@
 			"west":""
 		},
 		"item":["lamp", "mirror"],
-		"hidden": ["none"]
+		"hidden": [ ]
 	}
 }

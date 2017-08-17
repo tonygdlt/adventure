@@ -1,0 +1,8 @@
+{
+  "doll": {
+    "name": "doll",
+    "description": "a children doll",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

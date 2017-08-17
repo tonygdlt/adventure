@@ -28,9 +28,19 @@ def lookItem(restOfTheCommand, game):
         itemValid = False
         for stuff in game.currentRoom.items:
             if item == stuff.name:
-                print stuff.description
+                desc = stuff.description
                 itemValid = True
-        if not itemValid:
+
+        if item == "key" and game.status["rockLifted"] == False:
+            itemValid = False
+        elif item == "key2" and game.status["dresserOpened"] == False:
+            itemValid = False
+        elif item == "crowbar" and game.status["toolboxOpened"] == False:
+            itemValid = False
+
+        if itemValid:
+            print desc
+        else:
             print "Nothing to look at."
     else:
         print game.currentRoom.longDesc
@@ -70,7 +80,7 @@ def checkLockedRoom(room, game):
         else:
             print "The front door is locked."
     elif room.name == "Shed":
-        if game.shedUnlocked == False:
+        if game.status["shedUnlocked"] == False:
             for item in game.bag.items:
                 if item.name == "key2":
                     print "The shed unlocks and the door creaks open."
@@ -83,7 +93,7 @@ def checkLockedRoom(room, game):
     elif room.name == "Second Bedroom":
         if game.status["bedroomUnlocked"] == False:
             for item in game.bag.items:
-                if item.name == "crowbar" and game.bedroomUnlocked == False:
+                if item.name == "crowbar" and game.status["bedroomUnlocked"] == False:
                     print "Hmm.. if I could just use this crowbar to get in.."
         if game.status["bedroomUnlocked"] == True:
             game.currentRoom = room
@@ -101,13 +111,17 @@ def directionWhere(direction, game):
             if direction in game.currentRoom.neighborDirections:
                 isValidNeighbor = True
                 checkLockedRoom(game.currentRoom.neighborDirections[direction], game)
+                break
             else:
                 print "You cannot go in that direction."
 
 # handle go + adjective + roomname and two-word roomname as well as capital letter in room name
 def determineLocation(words):
     if len(words) == 1:
-        return words[-1]
+        if words[0].title() in listOfRooms:
+            return words[0].title()
+        else:
+            return words[0]
     else:
         if words[-1] in listOfRooms:
             return words[-1]
@@ -121,18 +135,21 @@ def determineLocation(words):
             return words
 
 def goWhere(words, game):
+    #print "words", words
     location = determineLocation(words)
     #print "location", location
     isValidNeighbor = False
     enteredNewRoom = False
     
+    foundRoom = False
     for i in game.rooms:
         if i == game.currentRoom:
             for j in i.neighbors:
-                if (location in game.currentRoom.neighborDirections) and (enteredNewRoom == False):
+                if (location in game.currentRoom.neighborDirections) and (enteredNewRoom == False) and (foundRoom==False):
                     isValidNeighbor = True
                     checkLockedRoom(game.currentRoom.neighborDirections[location], game)
                     enteredNewRoom = True
+                    foundRoom = True
 
                 elif j.name == location: #for context 'go room'
                     isValidNeighbor = True
@@ -177,6 +194,26 @@ def takeItem(item, game):
                             print "Placed", item, "in bag."
                         else:
                             print "No", item, "to pick up."
+                    elif item == "key2":
+                        if game.status["dresserOpened"] == True:
+                            game.bag.items.append(stuff)
+                            game.currentRoom.items.remove(stuff)
+                            print "Placed", item, "in bag."
+                        else:
+                            print "No", item, "to pick up."
+                    elif item == "crowbar":
+                        if game.status["toolboxOpened"] == True:
+                            game.bag.items.append(stuff)
+                            game.currentRoom.items.remove(stuff)
+                            print "Placed", item, "in bag."
+                        else:
+                            print "No", item, "to pick up."
+
+                    #when pick up objects other than key, key2, crowbar
+                    else:
+                        game.bag.items.append(stuff)
+                        game.currentRoom.items.remove(stuff)
+                        print "Placed", item, "in bag."
                 else:
                     print "You cannot take that item."
         if itemFound == False:
@@ -227,15 +264,26 @@ def hitItem(item, game):
 
     itemFound = False
     crowbarFound = False
+
     for stuff in game.currentRoom.items:
         if stuff.name == item:
             itemFound = True
+            if item == "key" and game.status["rockLifted"] == False:
+                print "No", item, "to hit."
+                break
+            elif item == "key2" and game.status["dresserOpened"] == False:
+                print "No", item, "to hit."
+                break
+            elif item == "crowbar" and game.status["toolboxOpened"] == False:
+                print "No", item, "to hit."
+                break
+
             if "hit" in stuff.availableVerbs:
                 if stuff.name == "boarded up door":
                     for item in game.bag.items:
                         if item.name == "crowbar":
                             crowbarFound = True
-                            game.bedroomUnlocked = True
+                            game.status["bedroomUnlocked"] = True
                             game.currentRoom.items.remove(stuff)
                             print "You wedge the crowbar between the wooden planks and pry the door open."
                     if crowbarFound == False:
@@ -261,6 +309,17 @@ def liftItem(item, game):
     for stuff in game.currentRoom.items:
         if stuff.name == item:
             itemFound = True
+
+            if item == "key" and game.status["rockLifted"] == False:
+                print "No", item, "to lift."
+                break
+            elif item == "key2" and game.status["dresserOpened"] == False:
+                print "No", item, "to lift."
+                break
+            elif item == "crowbar" and game.status["toolboxOpened"] == False:
+                print "No", item, "to lift."
+                break
+
             if "lift" in stuff.availableVerbs:
                 if item == "rock":
                     game.status["rockLifted"] = True
@@ -294,6 +353,17 @@ def openItem(item, game):
     for stuff in game.currentRoom.items:
         if stuff.name == item:
             itemFound = True
+
+            if item == "key" and game.status["rockLifted"] == False:
+                print "No", item, "to open."
+                break
+            elif item == "key2" and game.status["dresserOpened"] == False:
+                print "No", item, "to open."
+                break
+            elif item == "crowbar" and game.status["toolboxOpened"] == False:
+                print "No", item, "to open."
+                break
+
             if "open" in stuff.availableVerbs:
                 #game.currentRoom.items.remove(stuff)
                 print "opened", stuff.name
@@ -450,6 +520,21 @@ def goUpstairsAndDownstairs(userInput, game):
                     game.currentRoom = room
                     enterRoom(room, game)
                     return True
+        foundRoom = False
+        if game.currentRoom.name == "Kitchen" and userInput.split()[-1]== "downstairs":
+            for room in game.rooms:
+                if room.name == "Basement" and foundRoom == False:
+                    foundRoom = True
+                    game.currentRoom = room
+                    enterRoom(room, game)
+                    return True
+        if game.currentRoom.name == "Basement" and userInput.split()[-1]== "upstairs":
+            for room in game.rooms:
+                if room.name == "Kitchen" and foundRoom == False:
+                    foundRoom = True
+                    game.currentRoom = room
+                    enterRoom(room, game)
+                    return True
     return False
 
 #--------------------------------------------------------
@@ -479,7 +564,7 @@ def commandParsing(userInput, game):
         print "use 'help' for instruction"
     return
 
-def checkGameStatus(game):
+def checkWinStatus(game):
     necklaceFound = False
     dollFound = False
     journalFound = False
@@ -553,7 +638,7 @@ def main():
         command = raw_input("> ")
         print ""
         commandParsing(command, game)
-        checkGameStatus(game)
+        checkWinStatus(game)
     
 if __name__ == "__main__":
     main()

@@ -1,0 +1,8 @@
+{
+  "crowbar": {
+    "name": "crowbar",
+    "description": "a cheap crowbar",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

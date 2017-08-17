@@ -1,0 +1,8 @@
+{
+  "bedside table": {
+    "name": "bedside table",
+    "description": "an IKEA black bedside table",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

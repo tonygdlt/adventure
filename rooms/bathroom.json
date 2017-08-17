@@ -10,10 +10,10 @@
 		"neighbors":{
 			"north":"",
 			"south":"",
-			"east":"",
-			"west":"Downstairs Hallway"
+			"east":"Downstairs Hallway",
+			"west":""
 		},
 		"item":["medicine cabinet", "shower curtain"],
-		"hidden": ["none"]
+		"hidden": [ ]
 	}
 }

@@ -36,6 +36,7 @@
     <Content Include="items\boarded up door.json" />
     <Content Include="items\bodies.json" />
     <Content Include="items\closet.json" />
+    <Content Include="items\crowbar.json" />
     <Content Include="items\crumpled paper.json" />
     <Content Include="items\desk.json" />
     <Content Include="items\doll.json" />
@@ -45,6 +46,7 @@
     <Content Include="items\dryer.json" />
     <Content Include="items\journal.json" />
     <Content Include="items\key.json" />
+    <Content Include="items\key2.json" />
     <Content Include="items\lamp.json" />
     <Content Include="items\light switch.json" />
     <Content Include="items\medicine cabinet.json" />

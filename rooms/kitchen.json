@@ -11,9 +11,9 @@
 			"north":"Backyard",
 			"south":"Dining Room",
 			"east":"",
-			"west":"Basement"
+			"west":"Downstairs Hallway"
 		},
 		"item":["stove", "refrigerator"],
-		"hidden": ["none"]
+		"hidden": [ ]
 	}
 }

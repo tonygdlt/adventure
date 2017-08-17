@@ -1,9 +1,0 @@
-{
-  "rock": 
-  {
-    "name": "rock",
-    "description": "seems like a fake rock and has something inside",
-    "availableVerbs": ["open"],
-    "relatedItems": ["key"]
-  }
-}

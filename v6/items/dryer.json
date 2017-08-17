@@ -1,0 +1,9 @@
+{
+  "dryer": 
+  {
+    "name": "dryer",
+    "description": "A tumble dryer in the corner of the basement",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

@@ -14,6 +14,6 @@
 			"west":""
 		},
 		"item":["bodies", "door"],
-		"hidden": ["none"]
+		"hidden": [ ]
 	}
 }

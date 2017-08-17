@@ -13,7 +13,7 @@
 			"east":"",
 			"west":""
 		},
-		"item":["tool box", "shed shelf"],
-		"hidden": ["none"]
+		"item":["tool box", "shed shelf", "crowbar"],
+		"hidden": ["crowbar"]
 	}
 }

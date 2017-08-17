@@ -10,9 +10,10 @@
 		"neighbors":{
 			"north":"",
 			"south":"",
-			"east":"",
-			"west":"Kitchen"
+			"east":"Kitchen",
+			"west":""
 		},
-		"item":["shelf", "dryer"]
+    "item": [ "shelf", "dryer", "necklace" ],
+    "hidden": [ ]
 	}
 }

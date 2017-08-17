@@ -14,6 +14,7 @@
 				"east":"you can see the railing, and the yard beyond. There is nothing there that can help you.",
 				"west":"you can see an old porch swing. It won't hold your weight."
 			},
-			"item":["porch swing", "door lock"]
+      "item": [ "porch swing", "door lock" ],
+      "hidden": [ ]
 		}
 	}

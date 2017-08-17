@@ -1,0 +1,9 @@
+{
+  "shed shelf": 
+  {
+    "name": "shed shelf",
+    "description": "a tall shed shelf",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

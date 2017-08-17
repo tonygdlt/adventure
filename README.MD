@@ -9,3 +9,10 @@ v1.25 Aug 14th - Add upstairs window to front yard. Add description about family
 v1.26 Aug 15th - Edit parsing system to handle 'go + adjective + room', 'adjective + room'<br>
 v1.27 Aug 16th - Merge Anthony's works. Connect all the rooms 1-15 in the document <em>Storyline Progress.</em> Add go upstairs and downstairs behavior in game engine.<br>
 v1.28 Aug 16th - Temporarily put necklace and doll in upstairs hallway. journal in master bedroom. Tested if taking all three objects and dropping them in the hidden room, the player wins the game.<br>
+v1.29 Aug 17th - Merge Anthony's works.<br>
+v1.30 Aug 17th - Merge Penny's works.<br>
+v1.31 Aug 17th - Rollback to previous state at v1.28 since the game does not function properly.<br>
+v1.32 Aug 17th - Fix bugs occur when player taking items other than key and and when the game engine accessing non-existent attribute game.bedroomUnlocked<br>
+v1.33 Aug 17th - Fix bugs regarding accessing non-existent attribute. Put crowbar in tool box, doll in backyard, necklace in the basement. Tested that user can win after following the instructions in the Progression.doc.<br>
+v1.34 Aug 17th - Fix bugs regarding moving two rooms in a row. Player can use "go upstairs" or "go downstairs" between Basement and Kitchen. Tested that user can win after following the instructions in the Progression.doc.<br>
+v1.35 Aug 17th - Fix bug regarding moving two rooms in a row using direction command such as "north".

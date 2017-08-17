@@ -1,0 +1,9 @@
+{
+  "shed door": 
+  {
+    "name": "shed door",
+    "description": "The door was the grey of unburnished dull and spotted with years of damage.",
+    "availableVerbs": ["open"],
+    "relatedItems": ["none"]
+  }
+}

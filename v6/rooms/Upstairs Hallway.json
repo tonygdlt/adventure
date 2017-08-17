@@ -1,0 +1,19 @@
+{
+	"Upstairs Hallway":
+	{
+		"roomName":"Upstairs Hallway",
+		"longDescription":"This a placeholder for the long description",
+		"shortDescription":"This a placeholder for the short description",
+		"features": [
+			"feature1",
+			"feature2"],
+		"neighbors":{
+			"north":"",
+			"south":"",
+			"east":"Second Bedroom",
+			"west":"Master Bedroom"
+		},
+		"item":["necklace", "doll", "boarded up door"],
+		"hidden": ["none"]
+	}
+}

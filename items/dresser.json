@@ -2,7 +2,7 @@
   "dresser": {
     "name": "dresser",
     "description": "a white dresser",
-    "availableVerbs": ["none"],
-    "relatedItems": ["none"]
+    "availableVerbs": ["open"],
+    "relatedItems": ["key2"]
   }
 }
