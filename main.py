@@ -365,16 +365,28 @@ def openItem(item, game):
                 break
 
             if "open" in stuff.availableVerbs:
-                #game.currentRoom.items.remove(stuff)
-                print "opened", stuff.name
-                empty = True
-                for item in game.currentRoom.items:
-                    if stuff.relatedItems[0] == item.name:
-                        empty = False
-                if empty:
-                    print "There's nothing inside of the", stuff.name
-                else:
-                    print "You found a", stuff.relatedItems[0]
+                if item == "dresser":
+                    game.status["dresserOpened"] = True
+                    print "You opened the", stuff.name
+                    empty = True
+                    for item in game.currentRoom.items:
+                        if stuff.relatedItems[0] == item.name:
+                            empty = False
+                    if empty:
+                        print "Looks like there's nothing inside of here."
+                    else:
+                        print "You found a", stuff.relatedItems[0]
+                elif item == "tool box":
+                    game.status["toolboxOpened"] = True
+                    print "You opened the", stuff.name
+                    empty = True
+                    for item in game.currentRoom.items:
+                        if stuff.relatedItems[0] == item.name:
+                            empty = False
+                    if empty:
+                        print "Looks like there's nothing inside of here."
+                    else:
+                        print "You found a", stuff.relatedItems[0]
             else:
                 print "You can't open that."
 
