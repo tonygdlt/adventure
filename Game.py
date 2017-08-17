@@ -10,13 +10,7 @@ class Game(object):
         self.stuff = list()
         self.roomNames = []
         self.rooms = list()
-        self.rockLifted = False
-        self.necklacePlaced = False
-        self.dollPlaced = False
-        self.journalPlaced = False
-        self.foyerUnlocked = False
-        self.shedUnlocked = False
-        self.bedroomUnlocked = False
+        self.status = {"rockLifted": False, "necklacePlaced": False, "dollPlaced": False, "journalPlaced": False, "foyerUnlocked": False, "shedUnlocked": False, "bedroomUnlocked": False}
 
         for item in itemData:
             self.stuff.append(Stuff(itemData[item]["name"], itemData[item]["description"], itemData[item]["availableVerbs"], itemData[item]["relatedItems"]))

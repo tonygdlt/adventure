@@ -59,12 +59,12 @@ def enterRoom(room, game):
 
 def checkLockedRoom(room, game):
     if room.name == "Foyer":
-        if game.foyerUnlocked == False:
+        if game.status["foyerUnlocked"] == False:
             for item in game.bag.items:
                 if item.name == "key":
                     print "The door unlocks and the door creaks open."
-                    game.foyerUnlocked = True
-        if game.foyerUnlocked == True:
+                    game.status["foyerUnlocked"] = True
+        if game.status["foyerUnlocked"] == True:
             game.currentRoom = room
             enterRoom(room, game)
         else:
@@ -74,18 +74,18 @@ def checkLockedRoom(room, game):
             for item in game.bag.items:
                 if item.name == "key2":
                     print "The shed unlocks and the door creaks open."
-                    game.foyerUnlocked = True
-        if game.shedUnlocked == True:
+                    game.status["shedUnlocked"] = True
+        if game.status["shedUnlocked"] == True:
             game.currentRoom = room
             enterRoom(room, game)
         else:
             print "The door is locked."
     elif room.name == "Second Bedroom":
-        if game.bedroomUnlocked == False:
+        if game.status["bedroomUnlocked"] == False:
             for item in game.bag.items:
                 if item.name == "crowbar" and game.bedroomUnlocked == False:
                     print "Hmm.. if I could just use this crowbar to get in.."
-        if game.bedroomUnlocked == True:
+        if game.status["bedroomUnlocked"] == True:
             game.currentRoom = room
             enterRoom(room, game)
         else:
@@ -171,7 +171,7 @@ def takeItem(item, game):
                 itemFound = True
                 if "take" in stuff.availableVerbs:
                     if item == "key":
-                        if game.rockLifted == True:
+                        if game.status["rockLifted"] == True:
                             game.bag.items.append(stuff)
                             game.currentRoom.items.remove(stuff)
                             print "Placed", item, "in bag."
@@ -263,7 +263,7 @@ def liftItem(item, game):
             itemFound = True
             if "lift" in stuff.availableVerbs:
                 if item == "rock":
-                    game.rockLifted = True
+                    game.status["rockLifted"] = True
                     print "You lifted the", stuff.name
                     empty = True
                     for item in game.currentRoom.items:
@@ -354,6 +354,9 @@ def resumeGame(game):
             if i == room.name:
                 room.items = roomItems
 
+    for i in jsonData["list"][loadNum-1]["status"]:
+        game.status[i] = jsonData["list"][loadNum-1]["status"][i]
+
     print "Game successfully loaded."
 
 def saveGame(game):
@@ -371,7 +374,7 @@ def saveGame(game):
     print "Enter a name for the save file."
     saveName = raw_input("> ")
     game.gameName = saveName
-    jsonToWrite = {"room":game.currentRoom.name, "bag":itemList, "name":game.gameName, "items":roomList}
+    jsonToWrite = {"room":game.currentRoom.name, "bag":itemList, "name":game.gameName, "items":roomList, "status":game.status}
     
     with open('savedGames.txt', 'r+') as f:
         data = json.load(f)
@@ -379,7 +382,7 @@ def saveGame(game):
         f.seek(0)
         json.dump(data, f)
     print "Game successfully saved."
-
+    
 def quitGame(game):
     sys.exit()
 
@@ -485,21 +488,21 @@ def checkGameStatus(game):
         if room.name == "Hidden Room":
             for roomItem in room.items:
                 if roomItem.name == "necklace":
-                    if game.necklacePlaced == False:
+                    if game.status["necklacePlaced"] == False:
                         print "necklace in place"
                     necklaceFound = True
                 elif roomItem.name == "doll":
-                    if game.dollPlaced == False:
+                    if game.status["dollPlaced"] == False:
                         print "doll in place"
                     dollFound = True
                 elif roomItem.name == "journal":
-                    if game.journalPlaced == False:
+                    if game.status["journalPlaced"] == False:
                         print "journal in place"
                     journalFound = True
 
-    game.necklacePlaced = necklaceFound
-    game.dollPlaced = dollFound
-    game.journalPlaced = journalFound
+    game.status["necklacePlaced"] = necklaceFound
+    game.status["dollPlaced"] = dollFound
+    game.status["journalPlaced"] = journalFound
 
     if necklaceFound == True and dollFound == True and journalFound == True:
         winGame()

@@ -80,6 +80,7 @@
     <Content Include="rooms\shed.json" />
     <Content Include="rooms\Upstairs Hallway.json" />
     <Content Include="savedGames.txt" />
+    <Content Include="tmp\savedG.pkl" />
     <Content Include="tmp\savedGames.txt" />
   </ItemGroup>
   <ItemGroup>
