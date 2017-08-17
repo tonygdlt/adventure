@@ -33,6 +33,7 @@
   <ItemGroup>
     <Content Include="items\bedside table.json" />
     <Content Include="items\bench.json" />
+    <Content Include="items\boarded up door.json" />
     <Content Include="items\bodies.json" />
     <Content Include="items\closet.json" />
     <Content Include="items\crumpled paper.json" />

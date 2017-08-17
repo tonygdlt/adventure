@@ -72,18 +72,17 @@ def checkLockedRoom(room, game):
             game.currentRoom = room
             enterRoom(room, game)
         else:
-            print "The door is boarded up."
+            print "The door is locked."
     elif room.name == "Second Bedroom":
         if game.bedroomUnlocked == False:
             for item in game.bag.items:
-                if item.name == "crowbar":
-                    print "You place the crowbar between the planks and pry the door open."
-                    game.foyerUnlocked = True
+                if item.name == "crowbar" and game.bedroomUnlocked == False:
+                    print "Hmm.. if I could just use this crowbar to get in.."
         if game.bedroomUnlocked == True:
             game.currentRoom = room
             enterRoom(room, game)
         else:
-            print "The bedroom door is locked."
+            print "The door is boarded up."
     else:
         game.currentRoom = room
         enterRoom(room, game)
@@ -142,7 +141,9 @@ def roomWhere(roomName, game):
 
 #acquire an object, putting it into your inventory
 def takeItem(item, game):
-    if len(item) == 2:
+    if len(item) == 3:
+        item = item[-3] + " " + item[-2] + " " + item[-1]
+    elif len(item) == 2:
         item = item[-2] + " " + item[-1]
     else:
         item = item[-1]
@@ -169,7 +170,9 @@ def takeItem(item, game):
 
 #drop object in current room, removing it from your inventory
 def dropItem(item, game):
-    if len(item) == 2:
+    if len(item) == 3:
+        item = item[-3] + " " + item[-2] + " " + item[-1]
+    elif len(item) == 2:
         item = item[-2] + " " + item[-1]
     else:
         item = item[-1]
@@ -195,17 +198,28 @@ def helpUser(game):
 
 #
 def hitItem(item, game):
-    if len(item) == 2:
+    if len(item) == 3:
+        item = item[-3] + " " + item[-2] + " " + item[-1]
+    elif len(item) == 2:
         item = item[-2] + " " + item[-1]
     else:
         item = item[-1]
 
     itemFound = False
+    crowbarFound = False
     for stuff in game.currentRoom.items:
         if stuff.name == item:
             itemFound = True
             if "hit" in stuff.availableVerbs:
-                print "Hit", stuff.name
+                if stuff.name == "boarded up door":
+                    for item in game.bag.items:
+                        if item.name == "crowbar":
+                            crowbarFound = True
+                            game.bedroomUnlocked = True
+                            game.currentRoom.items.remove(stuff)
+                            print "You wedge the crowbar between the wooden planks and pry the door open."
+                    if crowbarFound == False:
+                        print "It looks like you'll need a tool to hit that with."
             else:
                 print "You can't hit that."
 
@@ -214,7 +228,9 @@ def hitItem(item, game):
 
 
 def eatItem(item, game):
-    if len(item) == 2:
+    if len(item) == 3:
+        item = item[-3] + " " + item[-2] + " " + item[-1]
+    elif len(item) == 2:
         item = item[-2] + " " + item[-1]
     else:
         item = item[-1]

@@ -1,0 +1,8 @@
+{
+  "boarded up door": {
+    "name": "boarded up door",
+    "description": "planks of wood nailed to the second bedroom door",
+    "availableVerbs": ["hit"],
+    "relatedItems": ["none"]
+  }
+}
