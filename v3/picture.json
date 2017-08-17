@@ -1,8 +1,0 @@
-{
-  "picture": {
-    "name": "picture",
-    "description": "picture of a family",
-    "availableVerbs": ["none"],
-    "relatedItems": ["none"]
-  }
-}

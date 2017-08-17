@@ -1,0 +1,9 @@
+{
+  "stove": 
+  {
+    "name": "stove",
+    "description": "a sleek, professionally designed kitchen stove",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

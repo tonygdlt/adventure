@@ -1,9 +1,0 @@
-{
-  "key": 
-  {
-    "name": "key",
-    "description": "unlocks doors",
-    "availableVerbs": ["take"],
-    "relatedItems": ["none"]
-  }
-}

@@ -31,36 +31,17 @@
     <Folder Include="tmp\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="items\bedside table.json" />
     <Content Include="items\bench.json" />
-    <Content Include="items\bodies.json" />
-    <Content Include="items\closet.json" />
     <Content Include="items\crumpled paper.json" />
-    <Content Include="items\desk.json" />
-    <Content Include="items\doll.json" />
     <Content Include="items\door lock.json" />
-    <Content Include="items\door.json" />
-    <Content Include="items\dresser.json" />
-    <Content Include="items\dryer.json" />
-    <Content Include="items\journal.json" />
     <Content Include="items\key.json" />
     <Content Include="items\lamp.json" />
     <Content Include="items\light switch.json" />
-    <Content Include="items\medicine cabinet.json" />
     <Content Include="items\mirror.json" />
-    <Content Include="items\necklace.json" />
     <Content Include="items\picture.json" />
     <Content Include="items\porch swing.json" />
-    <Content Include="items\refrigerator.json" />
     <Content Include="items\rock.json" />
     <Content Include="items\rug.json" />
-    <Content Include="items\shed door.json" />
-    <Content Include="items\shed shelf.json" />
-    <Content Include="items\shelf.json" />
-    <Content Include="items\shower curtain.json" />
-    <Content Include="items\stove.json" />
-    <Content Include="items\swing set.json" />
-    <Content Include="items\tool box.json" />
     <Content Include="items\upstairs window.json" />
     <Content Include="items\window.json" />
     <Content Include="rooms\backyard.json" />
@@ -70,14 +51,14 @@
     <Content Include="rooms\Downstairs Hallway.json" />
     <Content Include="rooms\foyer.json" />
     <Content Include="rooms\Front Yard.json" />
-    <Content Include="rooms\Hidden Room.json" />
+    <Content Include="rooms\hiddenRoom.json" />
     <Content Include="rooms\kitchen.json" />
     <Content Include="rooms\Living Room.json" />
-    <Content Include="rooms\Master Bedroom.json" />
+    <Content Include="rooms\masterBedroom.json" />
     <Content Include="rooms\porch.json" />
-    <Content Include="rooms\Second Bedroom.json" />
+    <Content Include="rooms\secondBedroom.json" />
     <Content Include="rooms\shed.json" />
-    <Content Include="rooms\Upstairs Hallway.json" />
+    <Content Include="rooms\upstairsHallway.json" />
     <Content Include="savedGames.txt" />
     <Content Include="tmp\savedGames.txt" />
   </ItemGroup>

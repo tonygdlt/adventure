@@ -4,8 +4,16 @@ import json
 from Stuff import Stuff
 from ReadDataFiles import *
 
-#keep track room names
+
 listOfRooms=[]
+
+'''
+def readRoomFiles(roomFileNames, listOfRooms):
+    for i in range(0, len(roomFileNames)):
+        with open(roomFileNames[i], 'r') as name:
+            listOfRooms.update(json.load(name))
+    return listOfRooms
+'''
 
 
 #verb with object
@@ -44,49 +52,10 @@ def enterRoom(room, game):
         game.currentRoom.hasBeenVisited = True
     else:
         print game.currentRoom.shortDesc
-    #testing purpose. might comment out after the project is done.
-    showItemsInTheRoom(game)
+    #showItemsInTheRoom(game)
     print "Neighboring rooms:"
     for i in room.neighbors:
         print i.name
-
-def checkLockedRoom(room, game):
-    if room.name == "Foyer":
-        if game.foyerUnlocked == False:
-            for item in game.bag.items:
-                if item.name == "key":
-                    print "The door unlocks and the door creaks open."
-                    game.foyerUnlocked = True
-        if game.foyerUnlocked == True:
-            game.currentRoom = room
-            enterRoom(room, game)
-        else:
-            print "The front door is locked."
-    elif room.name == "Shed":
-        if game.shedUnlocked == False:
-            for item in game.bag.items:
-                if item.name == "key2":
-                    print "The shed unlocks and the door creaks open."
-                    game.foyerUnlocked = True
-        if game.shedUnlocked == True:
-            game.currentRoom = room
-            enterRoom(room, game)
-        else:
-            print "The door is boarded up."
-    elif room.name == "Second Bedroom":
-        if game.bedroomUnlocked == False:
-            for item in game.bag.items:
-                if item.name == "crowbar":
-                    print "You place the crowbar between the planks and pry the door open."
-                    game.foyerUnlocked = True
-        if game.bedroomUnlocked == True:
-            game.currentRoom = room
-            enterRoom(room, game)
-        else:
-            print "The bedroom door is locked."
-    else:
-        game.currentRoom = room
-        enterRoom(room, game)
 
 def directionWhere(direction, game):
     isValidNeighbor = False
@@ -94,7 +63,9 @@ def directionWhere(direction, game):
         if i == game.currentRoom:
             if direction in game.currentRoom.neighborDirections:
                 isValidNeighbor = True
-                checkLockedRoom(game.currentRoom.neighborDirections[direction], game)
+                game.currentRoom = game.currentRoom.neighborDirections[direction]
+                enterRoom(game.currentRoom, game)
+                return
             else:
                 print "You cannot go in that direction."
 
@@ -125,12 +96,14 @@ def goWhere(words, game):
             for j in i.neighbors:
                 if (location in game.currentRoom.neighborDirections) and (enteredNewRoom == False):
                     isValidNeighbor = True
-                    checkLockedRoom(game.currentRoom.neighborDirections[location], game)
+                    game.currentRoom = game.currentRoom.neighborDirections[location]
+                    enterRoom(game.currentRoom, game)
                     enteredNewRoom = True
 
                 elif j.name == location: #for context 'go room'
                     isValidNeighbor = True
-                    checkLockedRoom(j, game)
+                    game.currentRoom = j
+                    enterRoom(j, game)
 
     if isValidNeighbor == False:
         print "Please choose a valid neighboring room."
@@ -138,7 +111,8 @@ def goWhere(words, game):
 def roomWhere(roomName, game):
     for i in game.rooms:
         if i.name == roomName or i.name == roomName.title():
-            checkLockedRoom(i, game)
+            game.currentRoom = i
+            enterRoom(i, game)
 
 #acquire an object, putting it into your inventory
 def takeItem(item, game):
@@ -371,7 +345,7 @@ def isDirectionVerb(verb):
     return verb in directionVerb
 
 def isRoomVerb(roomName, game):
-    #print "roomName", roomName
+    print "roomName", roomName
     for i in game.currentRoom.neighbors:
         #print ">>", verb, i.name, "<<"
         if roomName == i.name or roomName.title() == i.name:
@@ -393,35 +367,10 @@ def showItemsInTheRoom(game):
                 print stuff.name
     print " "
 
-#handle go upstairs from downstairs hallway
-#or go downstairs from upstairs hallway
-def goUpstairsAndDownstairs(userInput, game):
-    verb = userInput.split()[0].lower()
-    if ( len(userInput.split()) >= 2 and verb == "go" and (userInput.split()[-1]== "upstairs" or userInput.split()[-1] == "downstairs")):
-        foundRoom = False
-        if game.currentRoom.name == "Downstairs Hallway" and userInput.split()[-1]== "upstairs":
-            for room in game.rooms:
-                if room.name == "Upstairs Hallway" and foundRoom == False:
-                    foundRoom = True
-                    game.currentRoom = room
-                    enterRoom(room, game)
-                    return True
-        if game.currentRoom.name == "Upstairs Hallway" and userInput.split()[-1]== "downstairs":
-            for room in game.rooms:
-                if room.name == "Downstairs Hallway" and foundRoom == False:
-                    foundRoom = True
-                    game.currentRoom = room
-                    enterRoom(room, game)
-                    return True
-    return False
-
 #--------------------------------------------------------
 
 def commandParsing(userInput, game):
     verb = userInput.split()[0].lower()
-    #handle go upstairs and downstairs
-    if (goUpstairsAndDownstairs(userInput, game)):
-        return
 	#check the verb is in the list
     if isActionVerb(verb) or isMenuVerb(verb) or isSingleVerb(verb) or isDirectionVerb(verb):
         if isMenuVerb(verb) or isSingleVerb(verb):
@@ -459,7 +408,7 @@ def checkGameStatus(game):
                         print "doll in place"
                     dollFound = True
                 elif roomItem.name == "journal":
-                    if game.journalPlaced == False:
+                    if game.journalPlace == False:
                         print "journal in place"
                     journalFound = True
 
@@ -504,8 +453,7 @@ def main():
     print game.currentRoom.longDesc
     game.currentRoom.hasBeenVisited = True
 
-    #testing purpose. we might comment out when complete the project
-    showItemsInTheRoom(game)
+    #showItemsInTheRoom(game)
 
     print ""
     print "Neighboring rooms:"

@@ -1,0 +1,8 @@
+{
+  "closet": {
+    "name": "closet",
+    "description": "a cheap closet",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

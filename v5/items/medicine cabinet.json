@@ -1,0 +1,8 @@
+{
+  "medicine cabinet": {
+    "name": "medicine cabinet",
+    "description": "the medicine cabinet was old and scratched.",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

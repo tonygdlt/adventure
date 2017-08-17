@@ -1,0 +1,8 @@
+{
+  "dresser": {
+    "name": "dresser",
+    "description": "a white dresser",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

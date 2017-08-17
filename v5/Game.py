@@ -13,9 +13,6 @@ class Game(object):
         self.necklacePlaced = False
         self.dollPlaced = False
         self.journalPlaced = False
-        self.foyerUnlocked = False
-        self.shedUnlocked = False
-        self.bedroomUnlocked = False
 
         for item in itemData:
             self.stuff.append(Stuff(itemData[item]["name"], itemData[item]["description"], itemData[item]["availableVerbs"], itemData[item]["relatedItems"]))

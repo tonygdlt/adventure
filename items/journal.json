@@ -1,0 +1,8 @@
+{
+  "journal": {
+    "name": "journal",
+    "description": "a a journal which tells about how her mother was physically abusive to both her and her father",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}
