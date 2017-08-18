@@ -7,6 +7,10 @@ from ReadDataFiles import *
 #keep track room names
 listOfRooms=[]
 
+#load room and item data from file
+roomData = readRoomFile()
+itemData = readItemFile()
+
 
 #verb with object
 actionVerb = ["look", "go", "take", "drop", "hit", "lift", "open"]
@@ -400,7 +404,18 @@ def checkInventory(game):
         print stuff.name
 
 def startGame(game):
-    print "Welcome!"
+    game = Game(roomData, itemData)
+    print "Starting new game... \n\nEntering",
+    print game.currentRoom.name
+    print game.currentRoom.longDesc
+    game.currentRoom.hasBeenVisited = True
+
+    #testing purpose. we might comment out when complete the project
+    showItemsInTheRoom(game)
+
+    print "Neighboring rooms:"
+    for i in game.currentRoom.neighbors:
+        print i.name
 
 def resumeGame(game):
     print "Choose a saved game."
@@ -605,13 +620,9 @@ def checkWinStatus(game):
         winGame()
 
 def winGame():
-    print "You win!"
+    print "As you place the last item next to the bodies you hear a soft whisper. The misty figure of the child drifts over to the window, and pauses. She waves at you before soaring out the window, and into the night."
 
 def main():
-    #load room and item data from file
-    roomData = readRoomFile()
-    itemData = readItemFile()
-    
     #store in global var listOfRooms
     for room in roomData:
         listOfRooms.append(room)
@@ -634,16 +645,6 @@ def main():
             commandParsing(command, game)
         else:
             print "Please enter a valid choice."
-
-    print game.currentRoom.longDesc
-    game.currentRoom.hasBeenVisited = True
-
-    #testing purpose. we might comment out when complete the project
-    showItemsInTheRoom(game)
-
-    print "Neighboring rooms:"
-    for i in game.currentRoom.neighbors:
-        print i.name
 
     while True:
         print ""
