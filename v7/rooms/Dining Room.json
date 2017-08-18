@@ -1,0 +1,20 @@
+{
+	"Dining Room":
+	{
+		"roomName":"Dining Room",
+		"longDescription":"This a placeholder for the long description",
+		"shortDescription":"This a placeholder for the short description",
+		"features": [
+			"feature1",
+			"feature2"],
+		"neighbors":	
+		{
+			"north":"Kitchen",
+			"south":"",
+			"east":"",
+			"west":"Foyer"
+		},
+		"item":["window", "crumpled paper"],
+		"hidden": [ ]
+	}
+}

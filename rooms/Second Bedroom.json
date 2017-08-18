@@ -2,18 +2,18 @@
 	"Second Bedroom":
 	{
 		"roomName":"Second Bedroom",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"This room is obviously a child's room. The faded wallpaer has puppies and kittens chasing each other. There is a pile of stuffed animals on the bed, and trinkets scattered across the desk. Also on the desk was a brown leather journal.",
+		"shortDescription":"To the west is the upstairs hallway, and to the south you can see the closet.",
+		"features": [],
 		"neighbors":{
 			"north":"",
 			"south":"Hidden Room",
 			"east":"",
 			"west":"Upstairs Hallway"
 		},
-		"item":["desk", "closet"],
-		"hidden": [ ]
+		"item":[
+			"desk",
+			"closet"],
+		"hidden": []
 	}
 }

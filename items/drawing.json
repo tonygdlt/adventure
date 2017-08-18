@@ -1,0 +1,9 @@
+{
+  "drawing": 
+  {
+    "name": "drawing",
+    "description": "a drawing of a child huddled with another figure while a third figure stands over them with a hand raised.",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

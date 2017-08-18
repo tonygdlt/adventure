@@ -1,0 +1,9 @@
+{
+  "light switch": 
+  {
+    "name": "light switch",
+    "description": "entryway light switch",
+    "availableVerbs": ["turn on"],
+    "relatedItems": ["none"]
+  }
+}

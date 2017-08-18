@@ -1,7 +1,7 @@
 {
   "desk": {
     "name": "desk",
-    "description": "The desk in the room could only be described as archaic. It was like something out of the 1990's",
+    "description": "The desk in the room could only be described as archaic. It was like something out of the 1990s",
     "availableVerbs": ["none"],
     "relatedItems": ["none"]
   }

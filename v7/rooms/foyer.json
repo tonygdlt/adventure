@@ -1,0 +1,19 @@
+{
+	"Foyer":
+	{
+		"roomName":"Foyer",
+		"longDescription":"The large foyer has three arched doorways. You can see a table on the right side of the door, which has a small lamp with a bare bulb on top of it. There is a light switch on the wall above the lamp. On the other side of the front door there is bench with worn cloth padding on top. The doorway to the east leads to the living room, and through it you can see a portion of the of the room. On the west side the doorway leads to the dining room. You can see the hallway to the north with stairs leading up to the second floor.",
+		"shortDescription":"The foyer has three doorways leading to other rooms. There is a small table to the right of the door that has a lamp on it and a light switch on the wall. To the left of the door is a bench. To the south of the room is the front door. On the east side of the foyer is the living room, and to the west is the dining room. The hallway is to the north of the foyer.",
+		"features": [
+			"feature1",
+			"feature2"],
+		"neighbors":{
+			"north":"Downstairs Hallway",
+			"south":"Porch",
+			"east":"Dining Room",
+			"west":"Living Room"
+		},
+    "item": [ "bench", "light switch" ],
+    "hidden": [ ]
+	}
+}

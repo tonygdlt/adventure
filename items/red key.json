@@ -1,0 +1,9 @@
+{
+  "red key": 
+  {
+    "name": "red key",
+    "description": "unlocks doors",
+    "availableVerbs": ["eat", "take"],
+    "relatedItems": ["none"]
+  }
+}

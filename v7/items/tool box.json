@@ -1,0 +1,9 @@
+{
+  "tool box": 
+  {
+    "name": "tool box",
+    "description": "an old and worn tool box",
+    "availableVerbs": ["open"],
+    "relatedItems": ["crowbar"]
+  }
+}

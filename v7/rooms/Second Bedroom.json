@@ -1,0 +1,19 @@
+{
+	"Second Bedroom":
+	{
+		"roomName":"Second Bedroom",
+		"longDescription":"This a placeholder for the long description",
+		"shortDescription":"This a placeholder for the short description",
+		"features": [
+			"feature1",
+			"feature2"],
+		"neighbors":{
+			"north":"",
+			"south":"Hidden Room",
+			"east":"",
+			"west":"Upstairs Hallway"
+		},
+		"item":["desk", "closet"],
+		"hidden": [ ]
+	}
+}

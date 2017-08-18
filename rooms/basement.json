@@ -2,18 +2,18 @@
 	"Basement":
 	{
 		"roomName":"Basement",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"The basement is divided into a laundry area and a play area. The laundry area still has an old dryer with a shelf above it. The rest of the room seems to have been a play area. There are a few toys scattered across the floor and some in boxes.",
+		"shortDescription":"You can see the stairs leading to the first floor to the north. Against one wall is a dryer with a shelf above it. The rest of the area has a few toys scattered on the floor.",
+		"features": [],
 		"neighbors":{
 			"north":"",
 			"south":"",
 			"east":"Kitchen",
 			"west":""
 		},
-    "item": [ "shelf", "dryer", "necklace" ],
-    "hidden": [ ]
+		"item":["necklace",
+			"shelf",
+			"dryer"],
+		"hidden": []
 	}
 }

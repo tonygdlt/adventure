@@ -1,0 +1,8 @@
+{
+  "lamp": {
+    "name": "lamp",
+    "description": "lights room",
+    "availableVerbs": ["hit"],
+    "relatedItems": ["none"]
+  }
+}

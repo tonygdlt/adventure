@@ -1,0 +1,8 @@
+{
+  "rug": {
+    "name": "rug",
+    "description": "an old hand-woven rug",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

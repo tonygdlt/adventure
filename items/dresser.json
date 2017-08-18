@@ -3,6 +3,6 @@
     "name": "dresser",
     "description": "a white dresser",
     "availableVerbs": ["open"],
-    "relatedItems": ["key2"]
+    "relatedItems": ["green key"]
   }
 }

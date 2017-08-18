@@ -1,0 +1,9 @@
+{
+  "note": 
+  {
+    "name": "note",
+    "description": "a suicide note from the mother",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

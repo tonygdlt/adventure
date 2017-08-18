@@ -1,0 +1,8 @@
+{
+  "door": {
+    "name": "door",
+    "description": "a door",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

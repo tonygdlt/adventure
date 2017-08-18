@@ -2,18 +2,16 @@
 	"Upstairs Hallway":
 	{
 		"roomName":"Upstairs Hallway",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"The first thing you notice in the hallway is a boarded up door to the east. The boards look like they've been there a while, but it doesn't look like you'll be able to remove them with your bare hands.'There is also a small table at the end of the hallway. The only other door leads to a large bedroom",
+		"shortDescription":"The upstaits hallway has a samll table at the end of the hall. There is a door to the left going to the master bedroom. The door to the right leads to a second bedroom.",
+		"features": [],
 		"neighbors":{
 			"north":"",
-			"south":"",
+			"south":"Downstairs Hallway",
 			"east":"Second Bedroom",
 			"west":"Master Bedroom"
 		},
-		"item":["boarded up door"],
-		"hidden": [ ]
+		"item":["boarded up door", "table"],
+		"hidden": []
 	}
 }

@@ -3,10 +3,8 @@
 	{
 		"roomName":"Living Room",
 		"longDescription":"The living room is pretty run down just like the parts of the house you've seen so far. You can see a alcove in one corner that has a built in bookcase. The bookcase must have been stuffed with books at some point because the middle of each shelf was sagging, but all the books were gone now.The cold fireplace still has ashes left in it, and you can see where nils had been driven into it to hold stockings. There's a large mirror above the frieplace that keeps giving you the creeps.You keep seeing something moving out of the corner of your eye, but when you turn towards it there's nothing there. There's a borken window that fases the front of the house, and on the opposit wall is a large painting.",
-		"shortDescription":"The living room is mostly empty with only a few decorations left. To the south is a broken window. On the east side of the room, opposite the doorway, there is a fireplace with a mirror above it and a lamp on the mantle. To the west in a corner is an alcove with a built in bookcase. To the north was a large painting.",
-		"features": [
-			"feature1",
-			"feature2"],
+		"shortDescription":"The living room is mostly empty with only a few decorations left. To the south is a broken window. On the west side of the room, opposite the doorway, there is a fireplace with a mirror above it and a lamp on the mantle. To the east in a corner is an alcove with a built in bookcase. To the north was a large painting.",
+		"features": [],
 		"neighbors":	
 		{
 			"north":"",
@@ -14,7 +12,9 @@
 			"east":"Foyer",
 			"west":""
 		},
-		"item":["lamp", "mirror"],
-		"hidden": [ ]
+		"item":[
+			"lamp", 
+			"mirror"],
+		"hidden": []
 	}
 }

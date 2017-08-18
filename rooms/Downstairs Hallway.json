@@ -2,18 +2,16 @@
 	"Downstairs Hallway":
 	{
 		"roomName":"Downstairs Hallway",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"The downstairs hallway has stairs to the north tht lead up to the second floor. The foyer is to the south, and there's a bathroom to the east. There is a tattered and stained rug running the length of the hallway. You can see a door in the back of the hallway opposite the stairs, but there's several heavy peices of furniture stacked back there. On the wall by the stairs there is a framed picture. It shows a man, woman, and a young girl.'",
+		"shortDescription":"The short hallway leads to a bathroom to the east, and the foyer is to the south. The stairs going to the second floor are to the north.",
+		"features": [],
 		"neighbors":{
-			"north":"Garage",
+			"north":"Upstairs Hallway",
 			"south":"Foyer",
-			"east": "Kitchen",
-	    	"west": "Bathroom"
+			"east":"",
+	    "west": "Bathroom"
 	    	},
 	    "item": ["picture", "rug"],
-	    "hidden": [ ]
+	    "hidden": []
 	}
 }

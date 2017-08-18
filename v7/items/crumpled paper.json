@@ -1,0 +1,8 @@
+{
+  "crumpled paper": {
+    "name": "crumpled paper",
+    "description": "a piece of crumpled paper",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

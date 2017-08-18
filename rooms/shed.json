@@ -1,19 +1,17 @@
 {
-	"Shed":
+	"shed":
 	{
 		"roomName":"Shed",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"The shed has many tools and otherodds and ends scattered about. Most of the items were either broken or rusted beyond use. There is a shelf against one wall, and a large toolbox against the other. The door leading back to the backyard is to the south.",
+		"shortDescription":"The shed is cluttered with various tools and junk. To the south is the backyard",
+		"features": [],
 		"neighbors":{
 			"north":"",
 			"south":"Backyard",
 			"east":"",
 			"west":""
 		},
-		"item":["tool box", "shed shelf", "crowbar"],
+		"item":["crowbar", "tool box", "shelf"],
 		"hidden": ["crowbar"]
 	}
 }

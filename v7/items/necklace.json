@@ -1,0 +1,8 @@
+{
+  "necklace": {
+    "name": "necklace",
+    "description": "a handcrafted necklace with blood stain",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

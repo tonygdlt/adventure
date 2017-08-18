@@ -1,19 +1,17 @@
 {
-	"Kitchen":
+	"kitchen":
 	{
 		"roomName":"Kitchen",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"Despite the layers of dust the kitchen seems like it was the most used of the rooms you've seen so far. There are small personal items and papers still on the counters, and papers still on the refrigerator. To the south is the dining room, and to the north is the door leading to the backyard. There is also a door to the west which leads to the basement.",
+		"shortDescription":"To the south of the kitchen is the dining room, and to the north is the door leading to the backyard. There is also a door to the west which leads to the basement.",
+		"features": [],
 		"neighbors":{
 			"north":"Backyard",
 			"south":"Dining Room",
 			"east":"",
-			"west":"Downstairs Hallway"
+			"west":"Basement"
 		},
-		"item":["stove", "refrigerator"],
-		"hidden": [ ]
+		"item":["note", "drawing", "stove", "refrigerator"],
+		"hidden": []
 	}
 }

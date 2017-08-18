@@ -2,8 +2,8 @@
   "rock": 
   {
     "name": "rock",
-    "description": "seems like a fake rock and has something inside",
+    "description": "seems like a fake rock and has something underneath",
     "availableVerbs": ["lift"],
-    "relatedItems": ["key"]
+    "relatedItems": ["red key"]
   }
 }

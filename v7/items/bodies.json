@@ -1,0 +1,8 @@
+{
+  "bodies": {
+    "name": "bodies",
+    "description": "bodies of the father and the daughter in each others arms.",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

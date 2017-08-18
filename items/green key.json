@@ -1,0 +1,9 @@
+{
+  "green key": 
+  {
+    "name": "green key",
+    "description": "unlocks doors",
+    "availableVerbs": ["take"],
+    "relatedItems": ["none"]
+  }
+}

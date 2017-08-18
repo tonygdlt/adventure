@@ -1,0 +1,9 @@
+{
+  "swing set": 
+  {
+    "name": "swing set",
+    "description": "a set of old, worn swing.",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

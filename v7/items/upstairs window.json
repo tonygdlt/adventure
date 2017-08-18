@@ -1,0 +1,8 @@
+{
+  "upstairs window": {
+    "name": "upstairs window",
+    "description": "upstairs window of the house",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

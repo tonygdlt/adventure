@@ -2,18 +2,19 @@
 	"Hidden Room":
 	{
 		"roomName":"Hidden Room",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"The first thing you notice in the room is the smell of death. It's not the sickly overpowering stench of a fresh corpse, but the dry dusty smell of old death. On the floor, wrapped in each other's embrace, are the corpses of the father and daughter. Besides the bodies the small room contains a few pieces of bedding. The window is directly across from the door, and the reason for the bars on just this window is now frightenly clear.",
+		"shortDescription":"The second bedroom is to the south of the hidden room. The bodies of the father and daughter lay on the floor in each other's arms.",
+		"features": [],
 		"neighbors":{
 			"north":"Second Bedroom",
 			"south":"",
 			"east":"",
 			"west":""
 		},
-		"item":["bodies", "door"],
-		"hidden": [ ]
+		"item":[
+			"bodies",
+      "door"
+		],
+		"hidden": []
 	}
 }

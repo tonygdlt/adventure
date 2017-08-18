@@ -1,19 +1,19 @@
 {
-	"backyard":
+	"Backyard":
 	{
 		"roomName":"Backyard",
-		"longDescription":"This a placeholder for the long description",
-		"shortDescription":"This a placeholder for the short description",
-		"features": [
-			"feature1",
-			"feature2"],
+		"longDescription":"The back yard of the house is even more overgrown than the front yard. You can see a rusty old swing set in one corner of the yard. The shed to the north is also in disrepair, with the paint almost completely peeled off of the metal walls. The distant house to the east is more visible, butstill isn't within shouting distance. You avoid looking at the creepy forest to the west. It's best not to think about what might come out of there.",
+		"shortDescription":"You can see the back door to the house which leads to the kitchen to the south. To the north is the shed. The neighbor's house is to the east, and the forest is to the west.'",
+		"features": [],
 		"neighbors":{
 			"north":"Shed",
 			"south":"Kitchen",
 			"east":"",
 			"west":""
 		},
-    "item": [ "shed door", "swing set", "doll" ],
-    "hidden": [ ]
+		"item":["doll",
+			"shed door",
+			"swing set"],
+		"hidden": []
 	}
 }

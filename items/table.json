@@ -1,0 +1,9 @@
+{
+  "table": 
+  {
+    "name": "table",
+    "description": "a small table on which sits a vase filled with whithered roses.",
+    "availableVerbs": ["none"],
+    "relatedItems": ["none"]
+  }
+}

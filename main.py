@@ -35,9 +35,9 @@ def lookItem(restOfTheCommand, game):
                 desc = stuff.description
                 itemValid = True
 
-        if item == "key" and game.status["rockLifted"] == False:
+        if item == "red key" and game.status["rockLifted"] == False:
             itemValid = False
-        elif item == "key2" and game.status["dresserOpened"] == False:
+        elif item == "green key" and game.status["dresserOpened"] == False:
             itemValid = False
         elif item == "crowbar" and game.status["toolboxOpened"] == False:
             itemValid = False
@@ -75,7 +75,7 @@ def checkLockedRoom(room, game):
     if room.name == "Foyer":
         if game.status["foyerUnlocked"] == False:
             for item in game.bag.items:
-                if item.name == "key":
+                if item.name == "red key":
                     print "The door unlocks and the door creaks open."
                     game.status["foyerUnlocked"] = True
         if game.status["foyerUnlocked"] == True:
@@ -86,7 +86,7 @@ def checkLockedRoom(room, game):
     elif room.name == "Shed":
         if game.status["shedUnlocked"] == False:
             for item in game.bag.items:
-                if item.name == "key2":
+                if item.name == "green key":
                     print "The shed unlocks and the door creaks open."
                     game.status["shedUnlocked"] = True
         if game.status["shedUnlocked"] == True:
@@ -191,14 +191,14 @@ def takeItem(item, game):
             if item == stuff.name:
                 itemFound = True
                 if "take" in stuff.availableVerbs:
-                    if item == "key":
+                    if item == "red key":
                         if game.status["rockLifted"] == True:
                             game.bag.items.append(stuff)
                             game.currentRoom.items.remove(stuff)
                             print "Placed", item, "in bag."
                         else:
                             print "No", item, "to pick up."
-                    elif item == "key2":
+                    elif item == "green key":
                         if game.status["dresserOpened"] == True:
                             game.bag.items.append(stuff)
                             game.currentRoom.items.remove(stuff)
@@ -213,7 +213,7 @@ def takeItem(item, game):
                         else:
                             print "No", item, "to pick up."
 
-                    #when pick up objects other than key, key2, crowbar
+                    #when pick up objects other than red key, green key, crowbar
                     else:
                         game.bag.items.append(stuff)
                         game.currentRoom.items.remove(stuff)
@@ -272,10 +272,10 @@ def hitItem(item, game):
     for stuff in game.currentRoom.items:
         if stuff.name == item:
             itemFound = True
-            if item == "key" and game.status["rockLifted"] == False:
+            if item == "red key" and game.status["rockLifted"] == False:
                 print "No", item, "to hit."
                 break
-            elif item == "key2" and game.status["dresserOpened"] == False:
+            elif item == "green key" and game.status["dresserOpened"] == False:
                 print "No", item, "to hit."
                 break
             elif item == "crowbar" and game.status["toolboxOpened"] == False:
@@ -314,10 +314,10 @@ def liftItem(item, game):
         if stuff.name == item:
             itemFound = True
 
-            if item == "key" and game.status["rockLifted"] == False:
+            if item == "red key" and game.status["rockLifted"] == False:
                 print "No", item, "to lift."
                 break
-            elif item == "key2" and game.status["dresserOpened"] == False:
+            elif item == "green key" and game.status["dresserOpened"] == False:
                 print "No", item, "to lift."
                 break
             elif item == "crowbar" and game.status["toolboxOpened"] == False:
@@ -358,10 +358,10 @@ def openItem(item, game):
         if stuff.name == item:
             itemFound = True
 
-            if item == "key" and game.status["rockLifted"] == False:
+            if item == "red key" and game.status["rockLifted"] == False:
                 print "No", item, "to open."
                 break
-            elif item == "key2" and game.status["dresserOpened"] == False:
+            elif item == "green key" and game.status["dresserOpened"] == False:
                 print "No", item, "to open."
                 break
             elif item == "crowbar" and game.status["toolboxOpened"] == False:
@@ -601,15 +601,15 @@ def checkWinStatus(game):
             for roomItem in room.items:
                 if roomItem.name == "necklace":
                     if game.status["necklacePlaced"] == False:
-                        print "necklace in place"
+                        print "As you place the necklace down, a sense of tranquility overcomes you."
                     necklaceFound = True
                 elif roomItem.name == "doll":
                     if game.status["dollPlaced"] == False:
-                        print "doll in place"
+                        print "You place the doll with the child and feel a calm embrace within."
                     dollFound = True
                 elif roomItem.name == "journal":
                     if game.status["journalPlaced"] == False:
-                        print "journal in place"
+                        print "It feels like the journal belongs here."
                     journalFound = True
 
     game.status["necklacePlaced"] = necklaceFound
@@ -620,7 +620,9 @@ def checkWinStatus(game):
         winGame()
 
 def winGame():
-    print "As you place the last item next to the bodies you hear a soft whisper. The misty figure of the child drifts over to the window, and pauses. She waves at you before soaring out the window, and into the night."
+    print "\nAs you place the last item next to the bodies you hear a soft whisper. The misty figure of the child drifts over to the window, and pauses. She waves at you before soaring out the window, and into the night."
+    print "Congratulations! You win!\n"
+    exit()
 
 def main():
     #store in global var listOfRooms
